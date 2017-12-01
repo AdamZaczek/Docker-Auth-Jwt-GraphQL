@@ -114,6 +114,24 @@ with `node --inspect=0.0.0.0:9229 tools/run.js` in either [`docker-compose.yml`]
 file or, even better, in `docker-compose.override.yml`. Then restart the app (`docker-compose up`) and
 [attach your debugger][vsdebug] to `127.0.0.1:9230` (see [`.vscode/launch.json`](./.vscode/launch.json))
 
+## Keeping Up-to-Date
+
+If you keep the original Git history after cloning this repo, you can always fetch and merge
+the recent updates back into your project by running:
+
+```bash
+git remote add nodejs-api-starter https://github.com/kriasoft/nodejs-api-starter.git
+git checkout master
+git fetch nodejs-api-starter
+git merge nodejs-api-starter/master
+docker-compose build --no-cache
+docker-compose run --rm --no-deps api yarn
+docker-compose up
+```
+
+*NOTE: Try to merge as soon as the new changes land on the master branch in Node.js API Starter
+repository, otherwise your project may differ too much from the base/upstream repo.*
+
 ## Deployment
 
 Customize the deployment script found in `tools/publish.js` if needed. Then whenever you need to
