@@ -1,20 +1,3 @@
-# Node.js API Starter Kit &nbsp; <a href="https://github.com/kriasoft/nodejs-api-starter/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/nodejs-api-starter.svg?style=social&label=Star&maxAge=3600" height="20"></a> <a href="https://twitter.com/ReactStarter"><img src="https://img.shields.io/twitter/follow/ReactStarter.svg?style=social&label=Follow&maxAge=3600" height="20"></a>
-
-Boilerplate and tooling for authoring **data API** backends with **[Node.js][node]** and
-**[GraphQL][gql]**. It is best suited for developing a **GraphQL API** endpoint as a standalone
-(micro)service ([demo][demo]), backing up web front-ends and/or mobile apps (see [React Starter
-Kit][rsk], [React Static Boilerplate][rsb] etc). Please, visit our [sponsors](https://www.paypal.me/koistya):
-
-<p align="center"><a href="https://rollbar.com/?utm_source=reactstartkit(github)&utm_medium=link&utm_campaign=reactstartkit(github)"><img src="https://koistya.github.io/files/rollbar-247x48.png" height="24" align="top" /></a> <a href="https://x-team.com/?utm_source=reactstarterkit&utm_medium=github-link&utm_campaign=reactstarterkit-june"><img src="https://koistya.github.io/files/xteam-168x48.png" height="24" align="top" /></a><sup><a href="https://x-team.com/join/?utm_source=reactstarterkit&utm_medium=github-link&utm_campaign=reactstarterkit-june">Hiring</a></sup></p>
-
-
----
-
-This project was bootstraped with [Node.js API Starter Kit][nodejskit] ([support][gitter]).
-
-<p align="center"><a href="https://graphql-demo.kriasoft.com"><img src="http://koistya.github.io/files/nodejs-api-starter-demo.png" width="600" alt="GraphQL Demo" /><br><sup>https://graphql-demo.kriasoft.com</sup></a></p>
-
-
 ## Tech Stack
 
 * [Docker][docker], [Node.js][node], [Yarn][yarn], [JavaScript][js], [Babel][babel], [Flow][flow], [Prettier][prettier] — core platform and dev tools
@@ -130,26 +113,6 @@ In order to run the app with [V8 inspector][v8debug] enabled, simply replace `no
 with `node --inspect=0.0.0.0:9229 tools/run.js` in either [`docker-compose.yml`](docker-compose.yml)
 file or, even better, in `docker-compose.override.yml`. Then restart the app (`docker-compose up`) and
 [attach your debugger][vsdebug] to `127.0.0.1:9230` (see [`.vscode/launch.json`](./.vscode/launch.json))
-
-
-## Keeping Up-to-Date
-
-If you keep the original Git history after cloning this repo, you can always fetch and merge
-the recent updates back into your project by running:
-
-```bash
-git remote add nodejs-api-starter https://github.com/kriasoft/nodejs-api-starter.git
-git checkout master
-git fetch nodejs-api-starter
-git merge nodejs-api-starter/master
-docker-compose build --no-cache
-docker-compose run --rm --no-deps api yarn
-docker-compose up
-```
-
-*NOTE: Try to merge as soon as the new changes land on the master branch in Node.js API Starter
-repository, otherwise your project may differ too much from the base/upstream repo.*
-
 
 ## Deployment
 

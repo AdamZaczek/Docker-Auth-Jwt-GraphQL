@@ -1,12 +1,4 @@
 #!/usr/bin/env node
-/**
- * Node.js API Starter Kit (https://reactstarter.com/nodejs)
- *
- * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
 
 const cp = require('child_process');
 const pkg = require('../package.json');
@@ -35,8 +27,7 @@ Options:
 
 // Build the API server locally.
 cp.spawnSync(
-  'docker-compose',
-  [
+  'docker-compose', [
     'run',
     '--rm',
     '--no-deps',
@@ -44,8 +35,9 @@ cp.spawnSync(
     '/bin/sh',
     '-c',
     'yarn install; yarn run build',
-  ],
-  { stdio: 'inherit' },
+  ], {
+    stdio: 'inherit'
+  },
 );
 
 // Create a Docker image based on the pre-built API server.
@@ -72,9 +64,9 @@ ssh.on('exit', () => {
   // on the remote server already), start the API server and any dependencies
   // in the background (via -d).
   cp.spawnSync(
-    'ssh',
-    ['-C', host, 'docker-compose', '-f', composeFile, 'up', '-d'],
-    { stdio: 'inherit' },
+    'ssh', ['-C', host, 'docker-compose', '-f', composeFile, 'up', '-d'], {
+      stdio: 'inherit'
+    },
   );
 
   if (process.argv.includes('--no-prune')) return;

@@ -1,12 +1,4 @@
 #!/usr/bin/env node
-/**
- * Node.js API Starter Kit (https://reactstarter.com/nodejs)
- *
- * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
 
 const fs = require('fs');
 const knex = require('knex');
@@ -33,7 +25,7 @@ const template = `module.exports.up = async (db) => {\n  \n};\n
 module.exports.down = async (db) => {\n  \n};\n
 module.exports.configuration = { transaction: true };\n`;
 
-module.exports = task('db', async () => {
+module.exports = task('db', async() => {
   let db;
 
   if (!commands.includes(command)) {

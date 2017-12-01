@@ -1,31 +1,28 @@
-/**
- * Node.js API Starter Kit (https://reactstarter.com/nodejs)
- *
- * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 /* @flow */
 
 import URL from 'url';
 import passport from 'passport';
 import validator from 'validator';
-import { Router } from 'express';
+import {
+  Router
+} from 'express';
 
 const router = new Router();
 
 // External login providers. Also see src/passport.js.
-const loginProviders = [
-  {
+const loginProviders = [{
     // https://developers.facebook.com/docs/facebook-login/permissions/
     provider: 'facebook',
-    options: { scope: ['public_profile', 'email'] },
+    options: {
+      scope: ['public_profile', 'email']
+    },
   },
   {
     provider: 'google',
-    options: { scope: 'profile email', accessType: 'offline' },
+    options: {
+      scope: 'profile email',
+      accessType: 'offline'
+    },
   },
   {
     provider: 'twitter',
@@ -44,9 +41,9 @@ function getOrigin(url: string) {
 // 'http://localhost:3000/about' => `true` (but only if its origin is whitelisted)
 function isValidReturnURL(url: string) {
   if (url.startsWith('/')) return true;
-  const whitelist = process.env.CORS_ORIGIN
-    ? process.env.CORS_ORIGIN.split(',')
-    : [];
+  const whitelist = process.env.CORS_ORIGIN ?
+    process.env.CORS_ORIGIN.split(',') :
+    [];
   return (
     validator.isURL(url, {
       require_tld: false,
@@ -76,14 +73,20 @@ function getSuccessRedirect(req) {
 }
 
 // Registers route handlers for the external login providers
-loginProviders.forEach(({ provider, options }) => {
+loginProviders.forEach(({
+  provider,
+  options
+}) => {
   router.get(
     `/login/${provider}`,
     (req, res, next) => {
       req.session.returnTo = getSuccessRedirect(req);
       next();
     },
-    passport.authenticate(provider, { failureFlash: true, ...options }),
+    passport.authenticate(provider, {
+      failureFlash: true,
+      ...options
+    }),
   );
 
   router.get(`/login/${provider}/return`, (req, res, next) =>
@@ -105,7 +108,9 @@ router.post('/login/clear', (req, res) => {
 
 // Allows to fetch the last login error(s) (which is usefull for single-page apps)
 router.post('/login/error', (req, res) => {
-  res.send({ errors: req.flash('error') });
+  res.send({
+    errors: req.flash('error')
+  });
 });
 
 export default router;

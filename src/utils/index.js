@@ -1,12 +1,3 @@
-/**
- * Node.js API Starter Kit (https://reactstarter.com/nodejs)
- *
- * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 /* @flow */
 
 /*
@@ -27,10 +18,10 @@ export function getType(obj: any) {
 }
 
 export function mapTo(
-  keys: Array<string | number>,
+  keys: Array < string | number > ,
   keyFn: any => string | number,
 ) {
-  return (rows: Array<any>) => {
+  return (rows: Array < any > ) => {
     const group = new Map(keys.map(key => [key, null]));
     rows.forEach(row => group.set(keyFn(row), row));
     return Array.from(group.values());
@@ -38,10 +29,10 @@ export function mapTo(
 }
 
 export function mapToMany(
-  keys: Array<string | number>,
+  keys: Array < string | number > ,
   keyFn: any => string | number,
 ) {
-  return (rows: Array<any>) => {
+  return (rows: Array < any > ) => {
     const group = new Map(keys.map(key => [key, []]));
     rows.forEach(row => group.get(keyFn(row)).push(row));
     return Array.from(group.values());
@@ -49,11 +40,11 @@ export function mapToMany(
 }
 
 export function mapToValues(
-  keys: Array<string | number>,
+  keys: Array < string | number > ,
   keyFn: any => string | number,
   valueFn: any => any,
 ) {
-  return (rows: Array<any>) => {
+  return (rows: Array < any > ) => {
     const group = new Map(keys.map(key => [key, null]));
     rows.forEach(row => group.set(keyFn(row), valueFn(row)));
     return Array.from(group.values());

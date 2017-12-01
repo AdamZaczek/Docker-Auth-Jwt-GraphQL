@@ -1,12 +1,3 @@
-/**
- * Node.js API Starter Kit (https://reactstarter.com/nodejs)
- *
- * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 /* @flow */
 
 // TODO: Log the error to Google Stackdriver, Rollbar etc.
@@ -19,7 +10,10 @@ export class ValidationError extends Error {
   code = 400;
   state: any;
 
-  constructor(errors: Array<{ key: string, message: string }>) {
+  constructor(errors: Array < {
+    key: string,
+    message: string
+  } > ) {
     super('The request is invalid.');
     this.state = errors.reduce((result, error) => {
       if (Object.prototype.hasOwnProperty.call(result, error.key)) {
@@ -45,4 +39,6 @@ export class ForbiddenError extends Error {
   message = this.message || 'Access is denied.';
 }
 
-export default { report };
+export default {
+  report
+};
