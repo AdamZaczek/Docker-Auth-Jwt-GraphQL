@@ -1,16 +1,11 @@
 /* @flow */
 /* eslint-disable no-param-reassign, no-underscore-dangle, max-len */
+/* to do - make new folder for password strategies */
 
 import passport from 'passport';
-import {
-  Strategy as GoogleStrategy
-} from 'passport-google-oauth20';
-import {
-  Strategy as FacebookStrategy
-} from 'passport-facebook';
-import {
-  Strategy as TwitterStrategy
-} from 'passport-twitter';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { Strategy as TwitterStrategy } from 'passport-twitter';
 
 import db from './db';
 
@@ -35,7 +30,7 @@ async function login(req, provider, profile, tokens) {
     user = await db
       .table('users')
       .where({
-        id: req.user.id
+        id: req.user.id,
       })
       .first();
   }
@@ -46,10 +41,11 @@ async function login(req, provider, profile, tokens) {
       .innerJoin('users', 'users.id', 'logins.user_id')
       .where({
         'logins.provider': provider,
-        'logins.id': profile.id
+        'logins.id': profile.id,
       })
       .first('users.*');
-    if (!user &&
+    if (
+      !user &&
       profile.emails &&
       profile.emails.length &&
       profile.emails[0].verified === true
@@ -71,9 +67,10 @@ async function login(req, provider, profile, tokens) {
       .table('users')
       .insert({
         display_name: profile.displayName,
-        image_url: profile.photos && profile.photos.length ?
-          profile.photos[0].value :
-          null,
+        image_url:
+          profile.photos && profile.photos.length
+            ? profile.photos[0].value
+            : null,
       })
       .returning('*'))[0];
 
@@ -91,11 +88,9 @@ async function login(req, provider, profile, tokens) {
   const loginKeys = {
     user_id: user.id,
     provider,
-    id: profile.id
+    id: profile.id,
   };
-  const {
-    count
-  } = await db
+  const { count } = await db
     .table('logins')
     .where(loginKeys)
     .count('id')
@@ -127,15 +122,40 @@ async function login(req, provider, profile, tokens) {
   };
 }
 
+const LocalStrategy = require('passport-local').Strategy;
+
+const options = {};
+
+passport.use(
+  new LocalStrategy(options, (username, password, done) => {
+    // check to see if the username exists
+    db('users')
+      .where({
+        username,
+      })
+      .first()
+      .then(user => {
+        if (!user) return done(null, false);
+        /* to do - fix this line */
+        // if (!authHelpers.comparePass(password, user.password)) {
+        //   return done(null, false);
+        // }
+        return done(null, user);
+      })
+      .catch(err => done(err));
+  }),
+);
+
 // https://github.com/jaredhanson/passport-google-oauth2
 passport.use(
-  new GoogleStrategy({
+  new GoogleStrategy(
+    {
       clientID: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
       callbackURL: '/login/google/return',
       passReqToCallback: true,
     },
-    async(req, accessToken, refreshToken, profile, done) => {
+    async (req, accessToken, refreshToken, profile, done) => {
       try {
         const user = await login(req, 'google', profile, {
           accessToken,
@@ -152,7 +172,8 @@ passport.use(
 // https://github.com/jaredhanson/passport-facebook
 // https://developers.facebook.com/docs/facebook-login/permissions/
 passport.use(
-  new FacebookStrategy({
+  new FacebookStrategy(
+    {
       clientID: process.env.FACEBOOK_ID,
       clientSecret: process.env.FACEBOOK_SECRET,
       profileFields: [
@@ -172,7 +193,7 @@ passport.use(
       callbackURL: '/login/facebook/return',
       passReqToCallback: true,
     },
-    async(req, accessToken, refreshToken, profile, done) => {
+    async (req, accessToken, refreshToken, profile, done) => {
       try {
         if (profile.emails.length)
           profile.emails[0].verified = !!profile._json.verified;
@@ -193,7 +214,8 @@ passport.use(
 
 // https://github.com/jaredhanson/passport-twitter
 passport.use(
-  new TwitterStrategy({
+  new TwitterStrategy(
+    {
       consumerKey: process.env.TWITTER_KEY,
       consumerSecret: process.env.TWITTER_SECRET,
       callbackURL: '/login/twitter/return',
@@ -201,7 +223,7 @@ passport.use(
       includeStatus: false,
       passReqToCallback: true,
     },
-    async(req, token, tokenSecret, profile, done) => {
+    async (req, token, tokenSecret, profile, done) => {
       try {
         if (profile.emails && profile.emails.length)
           profile.emails[0].verified = true;

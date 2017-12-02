@@ -30,6 +30,7 @@
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth20": "^1.0.0",
+    "passport-local": "1.0.0",
     "passport-twitter": "^1.0.4",
     "pg": "^7.4.0",
     "pretty-error": "^2.1.1",
@@ -66,14 +67,19 @@
     "setupTestFrameworkScriptFile": "<rootDir>/tools/jest.setup.js"
   },
   "lint-staged": {
-    "*.js": ["eslint --no-ignore --fix", "git add --force"],
-    "*.json": ["prettier --write", "git add --force"]
+    "*.js": [
+      "eslint --no-ignore --fix",
+      "git add --force"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add --force"
+    ]
   },
   "scripts": {
     "precommit": "lint-staged",
     "lint": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" .",
-    "fix":
-      "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" --fix .",
+    "fix": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" --fix .",
     "check": "flow check",
     "test": "jest",
     "build": "node tools/build.js",
