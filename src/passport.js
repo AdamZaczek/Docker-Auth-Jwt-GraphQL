@@ -1,13 +1,13 @@
 /* @flow */
 /* eslint-disable no-param-reassign, no-underscore-dangle, max-len */
-/* to do - make new folder for password strategies */
+/* to do - make new folder for passport strategies */
 
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
-
 import db from './db';
+import comparePass from './helpers/auth';
 
 passport.serializeUser((user, done) => {
   done(null, {
@@ -136,10 +136,9 @@ passport.use(
       .first()
       .then(user => {
         if (!user) return done(null, false);
-        /* to do - fix this line */
-        // if (!authHelpers.comparePass(password, user.password)) {
-        //   return done(null, false);
-        // }
+        if (!comparePass(password, user.password)) {
+          return done(null, false);
+        }
         return done(null, user);
       })
       .catch(err => done(err));
