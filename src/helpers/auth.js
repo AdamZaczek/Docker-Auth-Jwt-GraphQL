@@ -1,7 +1,17 @@
 import bcrypt from 'bcryptjs';
+import db from '../db';
 
 // compares user password and hash in database
-const comparePass = (userPassword, databasePassword) =>
+export const comparePass = (userPassword, databasePassword) =>
   bcrypt.compareSync(userPassword, databasePassword);
 
-export default comparePass;
+export const createUser = req => {
+  const salt = bcrypt.genSaltSync();
+  const hash = bcrypt.hashSync(req.body.password, salt);
+  return db('users')
+    .insert({
+      username: req.body.username,
+      password: hash,
+    })
+    .returning('*');
+};

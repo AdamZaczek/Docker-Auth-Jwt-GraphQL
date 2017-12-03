@@ -3,25 +3,30 @@
 import URL from 'url';
 import passport from 'passport';
 import validator from 'validator';
-import {
-  Router
-} from 'express';
+import { Router } from 'express';
+import { createUser } from '../helpers/auth';
 
 const router = new Router();
 
 // External login providers. Also see src/passport.js.
-const loginProviders = [{
+const loginProviders = [
+  {
+    // custom login
+    provider: 'local',
+    options: {},
+  },
+  {
     // https://developers.facebook.com/docs/facebook-login/permissions/
     provider: 'facebook',
     options: {
-      scope: ['public_profile', 'email']
+      scope: ['public_profile', 'email'],
     },
   },
   {
     provider: 'google',
     options: {
       scope: 'profile email',
-      accessType: 'offline'
+      accessType: 'offline',
     },
   },
   {
@@ -41,9 +46,9 @@ function getOrigin(url: string) {
 // 'http://localhost:3000/about' => `true` (but only if its origin is whitelisted)
 function isValidReturnURL(url: string) {
   if (url.startsWith('/')) return true;
-  const whitelist = process.env.CORS_ORIGIN ?
-    process.env.CORS_ORIGIN.split(',') :
-    [];
+  const whitelist = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',')
+    : [];
   return (
     validator.isURL(url, {
       require_tld: false,
@@ -72,11 +77,28 @@ function getSuccessRedirect(req) {
   }`;
 }
 
+/* in progress */
+
+const handleResponse = (res, code, statusMsg) => {
+  res.status(code).json({
+    status: statusMsg,
+  });
+};
+
+router.post('/register', (req, res, next) =>
+  createUser(req, res)
+    .then(() => {
+      passport.authenticate('local', (err, user) => {
+        if (user) {
+          handleResponse(res, 200, 'success');
+        }
+      })(req, res, next);
+    })
+    .catch(err => handleResponse(err, 500, 'error')),
+);
+
 // Registers route handlers for the external login providers
-loginProviders.forEach(({
-  provider,
-  options
-}) => {
+loginProviders.forEach(({ provider, options }) => {
   router.get(
     `/login/${provider}`,
     (req, res, next) => {
@@ -85,7 +107,7 @@ loginProviders.forEach(({
     },
     passport.authenticate(provider, {
       failureFlash: true,
-      ...options
+      ...options,
     }),
   );
 
@@ -109,7 +131,7 @@ router.post('/login/clear', (req, res) => {
 // Allows to fetch the last login error(s) (which is usefull for single-page apps)
 router.post('/login/error', (req, res) => {
   res.send({
-    errors: req.flash('error')
+    errors: req.flash('error'),
   });
 });
 

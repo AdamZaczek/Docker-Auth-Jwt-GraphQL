@@ -16,10 +16,7 @@ import i18nextMiddleware, {
 import i18nextBackend from 'i18next-node-fs-backend';
 import expressGraphQL from 'express-graphql';
 import PrettyError from 'pretty-error';
-import {
-  printSchema,
-  GraphQLError
-} from 'graphql';
+import { printSchema, GraphQLError } from 'graphql';
 
 import email from './email';
 import redis from './redis';
@@ -55,8 +52,9 @@ app.set('trust proxy', 'loopback');
 app.use(
   cors({
     origin(origin, cb) {
-      const whitelist = process.env.CORS_ORIGIN ?
-        process.env.CORS_ORIGIN.split(',') : [];
+      const whitelist = process.env.CORS_ORIGIN
+        ? process.env.CORS_ORIGIN.split(',')
+        : [];
       cb(null, whitelist.includes(origin));
     },
     credentials: true,
@@ -65,14 +63,16 @@ app.use(
 
 app.use(compression());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+);
 app.use(bodyParser.json());
 app.use(
   session({
-    store: new(connectRedis(session))({
-      client: redis
+    store: new (connectRedis(session))({
+      client: redis,
     }),
     name: 'sid',
     resave: true,
@@ -93,7 +93,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.get('/:email(email|emails)/:template', (req, res) => {
     const message = email.render(req.params.template, {
       t: req.t,
-      v: 123
+      v: 123,
     });
     res.send(message.html);
   });
