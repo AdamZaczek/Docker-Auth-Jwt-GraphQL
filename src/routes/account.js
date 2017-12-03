@@ -85,7 +85,7 @@ const handleResponse = (res, code, statusMsg) => {
   });
 };
 
-router.post('/register', (req, res, next) =>
+const registerRoute = router.post('/register', (req, res, next) =>
   createUser(req, res)
     .then(() => {
       passport.authenticate('local', (err, user) => {
@@ -96,6 +96,8 @@ router.post('/register', (req, res, next) =>
     })
     .catch(err => handleResponse(err, 500, 'error')),
 );
+
+router.get('/auth', registerRoute);
 
 // Registers route handlers for the external login providers
 loginProviders.forEach(({ provider, options }) => {

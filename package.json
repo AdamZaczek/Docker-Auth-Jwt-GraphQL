@@ -66,7 +66,15 @@
     "prettier": "^1.8.2"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/tools/jest.setup.js"
+    "collectCoverageFrom": "src/**/*.{js}",
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/tools/jest.setup.js",
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.js?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+    ]
   },
   "lint-staged": {
     "*.js": [
