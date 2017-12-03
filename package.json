@@ -7,6 +7,7 @@
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "chai-http": "^3.0.0",
     "compression": "^1.7.1",
     "connect-redis": "^3.3.2",
     "cookie-parser": "^1.4.3",
@@ -52,6 +53,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
     "chokidar": "^1.7.0",
     "del": "3.0.0",
     "eslint": "^4.12.0",
@@ -66,9 +68,8 @@
     "prettier": "^1.8.2"
   },
   "jest": {
-    "collectCoverageFrom": "src/**/*.{js}",
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
+    "collectCoverageFrom": [
+      "src/**/*.{js}"
     ],
     "setupTestFrameworkScriptFile": "<rootDir>/tools/jest.setup.js",
     "testMatch": [

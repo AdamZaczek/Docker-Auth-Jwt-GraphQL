@@ -1,16 +1,15 @@
-// const chai = require('chai');
-// const should = chai.should();
-// const chaiHttp = require('chai-http');
-// chai.use(chaiHttp);
+import chai from 'chai';
 
-// const server = require('../../../src/server');
-// const db = require('../../../src/db');
+const should = chai.should();
+const chaiHttp = require('chai-http');
 
-// describe('routes : auth', () => {
-//   beforeEach(() => db.migrate.rollback()
-//       .then(() => {
-//         return db.migrate.latest();
-//       }));
+chai.use(chaiHttp);
 
-//   afterEach(() => db.migrate.rollback());
-// });
+const server = require('../../../src/server');
+const db = require('../../../src/db');
+
+describe('routes : auth', () => {
+  beforeEach(() => db.migrate.rollback().then(() => db.migrate.latest()));
+
+  afterEach(() => db.migrate.rollback());
+});
