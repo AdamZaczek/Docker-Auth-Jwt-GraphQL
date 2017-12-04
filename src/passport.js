@@ -3,9 +3,9 @@
 /* to do - make new folder for passport strategies */
 
 import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+// import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
-import { Strategy as TwitterStrategy } from 'passport-twitter';
+// import { Strategy as TwitterStrategy } from 'passport-twitter';
 import db from './db';
 import { comparePass } from './helpers/auth';
 
@@ -146,27 +146,27 @@ passport.use(
 );
 
 // https://github.com/jaredhanson/passport-google-oauth2
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
-      callbackURL: '/login/google/return',
-      passReqToCallback: true,
-    },
-    async (req, accessToken, refreshToken, profile, done) => {
-      try {
-        const user = await login(req, 'google', profile, {
-          accessToken,
-          refreshToken,
-        });
-        done(null, user);
-      } catch (err) {
-        done(err);
-      }
-    },
-  ),
-);
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.GOOGLE_ID,
+//       clientSecret: process.env.GOOGLE_SECRET,
+//       callbackURL: '/login/google/return',
+//       passReqToCallback: true,
+//     },
+//     async (req, accessToken, refreshToken, profile, done) => {
+//       try {
+//         const user = await login(req, 'google', profile, {
+//           accessToken,
+//           refreshToken,
+//         });
+//         done(null, user);
+//       } catch (err) {
+//         done(err);
+//       }
+//     },
+//   ),
+// );
 
 // https://github.com/jaredhanson/passport-facebook
 // https://developers.facebook.com/docs/facebook-login/permissions/
@@ -212,30 +212,30 @@ passport.use(
 );
 
 // https://github.com/jaredhanson/passport-twitter
-passport.use(
-  new TwitterStrategy(
-    {
-      consumerKey: process.env.TWITTER_KEY,
-      consumerSecret: process.env.TWITTER_SECRET,
-      callbackURL: '/login/twitter/return',
-      includeEmail: true,
-      includeStatus: false,
-      passReqToCallback: true,
-    },
-    async (req, token, tokenSecret, profile, done) => {
-      try {
-        if (profile.emails && profile.emails.length)
-          profile.emails[0].verified = true;
-        const user = await login(req, 'twitter', profile, {
-          token,
-          tokenSecret,
-        });
-        done(null, user);
-      } catch (err) {
-        done(err);
-      }
-    },
-  ),
-);
+// passport.use(
+//   new TwitterStrategy(
+//     {
+//       consumerKey: process.env.TWITTER_KEY,
+//       consumerSecret: process.env.TWITTER_SECRET,
+//       callbackURL: '/login/twitter/return',
+//       includeEmail: true,
+//       includeStatus: false,
+//       passReqToCallback: true,
+//     },
+//     async (req, token, tokenSecret, profile, done) => {
+//       try {
+//         if (profile.emails && profile.emails.length)
+//           profile.emails[0].verified = true;
+//         const user = await login(req, 'twitter', profile, {
+//           token,
+//           tokenSecret,
+//         });
+//         done(null, user);
+//       } catch (err) {
+//         done(err);
+//       }
+//     },
+//   ),
+// );
 
 export default passport;
