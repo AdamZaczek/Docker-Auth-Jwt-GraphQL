@@ -1,13 +1,13 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef, no-unused-vars */
 
 import chai from 'chai';
 
-// const should = chai.should();
+const should = chai.should();
 const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
 
-// const server = require('../src/server');
+const server = require('../src/server');
 const db = require('../src/db');
 
 describe('routes : auth', () => {

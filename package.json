@@ -92,7 +92,7 @@
     "lint": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" .",
     "fix": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" --fix .",
     "check": "flow check",
-    "test": "jest",
+    "test": "FACEBOOK_ID=1821424564802638 jest",
     "build": "node tools/build.js",
     "build-watch": "babel-node tools/build.js --watch",
     "db-version": "babel-node tools/db.js version",

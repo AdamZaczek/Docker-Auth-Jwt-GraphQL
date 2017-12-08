@@ -43,7 +43,6 @@
 └── postgres-initdb.sh          # Configuration script for the PostgreSQL Docker container
 ```
 
-
 ## Prerequisites
 
 * [Docker][docker] Community Edition v17 or higher
@@ -94,7 +93,6 @@ docker-compose exec db psql <db> -U postgres
 For the full list of automation scripts available in this project, please reffer to "scripts"
 section in the [`package.json`](./package.json) file and the [`tools`](./tools) folder.
 
-
 ## Testing
 
 ```bash
@@ -105,7 +103,6 @@ yarn docker-test-watch          # Run unit tests in watch mode inside a Docker c
 ```
 
 For more information visit http://facebook.github.io/jest/
-
 
 ## Debugging
 
@@ -154,25 +151,6 @@ Not sure where to deploy your app? [DigitalOcean][do] is a great choice in many 
   ([video](https://youtu.be/IV4IsYyfdKI)) by [Davey Edwards](https://twitter.com/daveyedwards)
 * [How to call C/C++ code from Node.js](https://medium.com/@tarkus/how-to-call-c-c-code-from-node-js-86a773033892)
   by [Konstantin Tarkus](https://twitter.com/koistya)
-
-
-## Related Projects
-
-* [GraphQL.js](https://github.com/graphql/graphql-js) — The JavaScript reference implementation for [GraphQL](http://graphql.org/)
-* [DataLoader](https://github.com/facebook/dataloader) — Batching and caching for GraphQL data access layer
-* [React Starter Kit](https://github.com/kriasoft/react-starter-kit) — Isomorphic web app boilerplate (React, Node.js, Babel, Webpack, CSS Modules)
-* [React Static Boilerplate](https://github.com/kriasoft/react-static-boilerplate) — Single-page application (SPA) starter kit (React, Redux, Webpack, Firebase)
-* [Membership Database](https://github.com/membership/membership.db) — SQL schema boilerplate for user accounts, profiles, roles, and auth claims
-
-
-## License
-
-Copyright © 2016-present Kriasoft. This source code is licensed under the MIT license found in the
-[LICENSE.txt](https://github.com/kriasoft/nodejs-api-starter/blob/master/LICENSE.txt) file.
-
----
-Made with ♥ by Konstantin Tarkus ([@koistya](https://twitter.com/koistya), [blog](https://medium.com/@tarkus)) and [contributors](https://github.com/kriasoft/nodejs-api-starter/graphs/contributors)
-
 
 [nodejskit]: https://github.com/kriasoft/nodejs-api-starter
 [rsk]: https://github.com/kriasoft/react-starter-kit
