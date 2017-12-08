@@ -143,15 +143,6 @@ node tools/publish <host>       # where <host> is the name of your web server (s
 
 Not sure where to deploy your app? [DigitalOcean][do] is a great choice in many cases (get [$10 credit][do])
 
-
-## Contributing
-
-Anyone and everyone is welcome to [contribute](CONTRIBUTING.md). Start by checking out the list of
-[open issues](https://github.com/kriasoft/nodejs-api-starter/issues) marked
-[help wanted](https://github.com/kriasoft/nodejs-api-starter/issues?q=label:"help+wanted").
-However, if you decide to get involved, please take a moment to review the [guidelines](CONTRIBUTING.md).
-
-
 ## Reference Articles and Tutorials
 
 * [Stop using JWT for sessions](http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions/)
