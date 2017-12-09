@@ -1,12 +1,12 @@
 import chai from 'chai';
+import server from '../../app';
+// const db = require('../../../src/db');
+import db from '../../db';
 
 const should = chai.should();
 const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
-
-const server = require('../../../src/server');
-const db = require('../../../src/db');
 
 describe('routes : auth', () => {
   beforeEach(() => db.migrate.rollback().then(() => db.migrate.latest()));

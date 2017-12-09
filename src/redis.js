@@ -9,6 +9,6 @@ bluebird.promisifyAll(redis.Multi.prototype);
 
 const client = redis.createClient(process.env.REDIS_URL);
 
-client.on('error', errors.report); // eslint-disable-line no-console
+client.on('error', errors.report);
 
 export default client;
