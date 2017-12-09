@@ -151,6 +151,7 @@ Not sure where to deploy your app? [DigitalOcean][do] is a great choice in many 
   ([video](https://youtu.be/IV4IsYyfdKI)) by [Davey Edwards](https://twitter.com/daveyedwards)
 * [How to call C/C++ code from Node.js](https://medium.com/@tarkus/how-to-call-c-c-code-from-node-js-86a773033892)
   by [Konstantin Tarkus](https://twitter.com/koistya)
+* [Docker and Docker Compose basics](https://jonnylangefeld.github.io/learning/Docker/How%2Bto%2BDocker.html)
 
 [nodejskit]: https://github.com/kriasoft/nodejs-api-starter
 [rsk]: https://github.com/kriasoft/react-starter-kit
