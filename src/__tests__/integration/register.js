@@ -1,6 +1,5 @@
 import chai from 'chai';
 import server from '../../app';
-// const db = require('../../../src/db');
 import db from '../../db';
 
 const should = chai.should();
