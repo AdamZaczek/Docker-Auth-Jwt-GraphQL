@@ -93,6 +93,11 @@ docker-compose exec db psql <db> -U postgres
 For the full list of automation scripts available in this project, please reffer to "scripts"
 section in the [`package.json`](./package.json) file and the [`tools`](./tools) folder.
 
+To list all the containers simply run
+```bash
+docker ps -a
+```
+
 ## Testing
 
 ```bash
