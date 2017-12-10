@@ -11,7 +11,7 @@ export const createUser = req => {
   return db('users')
     .insert({
       username: req.body.username,
-      password: hash,
+      password_hash: hash,
     })
     .returning('*');
 };

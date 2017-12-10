@@ -68,11 +68,28 @@ function getSuccessRedirect(req) {
 
 /* in progress */
 
-const handleResponse = (res, code, statusMsg) => {
+// const handleResponse = (res, code, statusMsg) => {
+//   res.status(code).json({
+//     status: statusMsg,
+//   });
+// };
+
+// router.post('/register', (req, res, next)  => {
+//   return authHelpers.createUser(req, res)
+//   .then((response) => {
+//     passport.authenticate('local', (err, user, info) => {
+//       if (user) { handleResponse(res, 200, 'success'); }
+//     })(req, res, next);
+//   })
+//   .catch((err) => { handleResponse(res, 500, 'error'); });
+// });
+
+function handleResponse(res, code, statusMsg) {
+  console.log(res, res.status);
   res.status(code).json({
     status: statusMsg,
   });
-};
+}
 
 // const registerRoute = () =>
 router.post('/auth/register', (req, res, next) =>
