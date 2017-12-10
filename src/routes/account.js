@@ -10,28 +10,17 @@ const router = new Router();
 
 // External login providers. Also see src/passport.js.
 const loginProviders = [
-  {
-    // custom login
-    provider: 'local',
-    options: {},
-  },
+  // {
+  //   // custom login
+  //   provider: 'local',
+  //   options: {},
+  // },
   {
     // https://developers.facebook.com/docs/facebook-login/permissions/
     provider: 'facebook',
     options: {
       scope: ['public_profile', 'email'],
     },
-  },
-  {
-    provider: 'google',
-    options: {
-      scope: 'profile email',
-      accessType: 'offline',
-    },
-  },
-  {
-    provider: 'twitter',
-    options: {},
   },
 ];
 
@@ -85,10 +74,12 @@ const handleResponse = (res, code, statusMsg) => {
   });
 };
 
-const registerRoute = router.post('/register', (req, res, next) =>
+// const registerRoute = () =>
+router.post('/auth/register', (req, res, next) =>
   createUser(req, res)
     .then(() => {
       passport.authenticate('local', (err, user) => {
+        console.log(err, user);
         if (user) {
           handleResponse(res, 200, 'success');
         }
@@ -96,8 +87,6 @@ const registerRoute = router.post('/register', (req, res, next) =>
     })
     .catch(err => handleResponse(err, 500, 'error')),
 );
-
-router.get('/auth', registerRoute);
 
 // Registers route handlers for the external login providers
 loginProviders.forEach(({ provider, options }) => {
@@ -136,5 +125,8 @@ router.post('/login/error', (req, res) => {
     errors: req.flash('error'),
   });
 });
+
+// it looks like we still dont have register route
+console.log(router.stack);
 
 export default router;

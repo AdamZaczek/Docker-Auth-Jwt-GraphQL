@@ -3,9 +3,7 @@
 /* to do - make new folder for passport strategies */
 
 import passport from 'passport';
-// import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
-// import { Strategy as TwitterStrategy } from 'passport-twitter';
 import db from './db';
 import { comparePass } from './helpers/auth';
 
