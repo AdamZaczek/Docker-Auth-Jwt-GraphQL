@@ -1,12 +1,3 @@
-/**
- * Node.js API Starter Kit (https://reactstarter.com/nodejs)
- *
- * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 // Create database schema for storing user accounts, logins and authentication claims/tokens
 // Source https://github.com/membership/membership.db
 // prettier-ignore
@@ -17,7 +8,7 @@ module.exports.up = async db => {
     // with respect to keyspace fragmentation on disk for the tables because it's time based
     // https://www.postgresql.org/docs/current/static/uuid-ossp.html
     table.uuid('id').notNullable().defaultTo(db.raw('uuid_generate_v1mc()')).primary();
-    table.string('display_name', 100);
+    table.string('username', 100);
     table.string('image_url', 200);
     table.string('password_hash', 128);
     table.timestamps(false, true);
@@ -87,4 +78,6 @@ module.exports.down = async db => {
   await db.schema.dropTableIfExists('users');
 };
 
-module.exports.configuration = { transaction: true };
+module.exports.configuration = {
+  transaction: true,
+};

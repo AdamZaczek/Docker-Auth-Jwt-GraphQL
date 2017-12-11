@@ -10,7 +10,7 @@ import { comparePass } from './helpers/auth';
 passport.serializeUser((user, done) => {
   done(null, {
     id: user.id,
-    displayName: user.displayName,
+    username: user.name,
     imageUrl: user.imageUrl,
   });
 });
@@ -64,7 +64,7 @@ async function login(req, provider, profile, tokens) {
     user = (await db
       .table('users')
       .insert({
-        display_name: profile.displayName,
+        username: profile.displayName,
         image_url:
           profile.photos && profile.photos.length
             ? profile.photos[0].value
@@ -125,11 +125,11 @@ const LocalStrategy = require('passport-local').Strategy;
 const options = {};
 
 passport.use(
-  new LocalStrategy(options, (username, password, done) => {
+  new LocalStrategy(options, (username, password, done) => { // eslint-disable-line
     // check to see if the username exists
     db('users')
       .where({
-        username,
+        username, // eslint-disable-line
       })
       .first()
       .then(user => {

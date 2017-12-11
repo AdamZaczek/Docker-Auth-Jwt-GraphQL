@@ -1,18 +1,10 @@
 /* @flow */
 
-import {
-  GraphQLObjectType,
-  GraphQLList,
-  GraphQLString
-} from 'graphql';
-import {
-  globalIdField
-} from 'graphql-relay';
+import { GraphQLObjectType, GraphQLList, GraphQLString } from 'graphql';
+import { globalIdField } from 'graphql-relay';
 
 import EmailType from './EmailType';
-import {
-  nodeInterface
-} from './Node';
+import { nodeInterface } from './Node';
 import type Context from '../Context';
 
 export default new GraphQLObjectType({
@@ -25,7 +17,7 @@ export default new GraphQLObjectType({
     displayName: {
       type: GraphQLString,
       resolve(parent) {
-        return parent.display_name;
+        return parent.username;
       },
     },
 
@@ -38,10 +30,7 @@ export default new GraphQLObjectType({
 
     emails: {
       type: new GraphQLList(EmailType),
-      resolve(parent, args, {
-        user,
-        emailsByUserId
-      }: Context) {
+      resolve(parent, args, { user, emailsByUserId }: Context) {
         return parent.id === user.id ? emailsByUserId.load(parent.id) : null;
       },
     },

@@ -95,6 +95,8 @@ function handleResponse(res, code, statusMsg) {
 router.post('/auth/register', (req, res, next) =>
   createUser(req, res)
     .then(() => {
+      // the error { error: column "username" of relation "users" does not exist
+      // leads here, the passport.authenticate method is broken atm
       passport.authenticate('local', (err, user) => {
         console.log(err, user);
         if (user) {
@@ -144,6 +146,9 @@ router.post('/login/error', (req, res) => {
 });
 
 // it looks like we still dont have register route
-console.log(router.stack);
+// console.log(router.stack);
+
+// my error atm:
+// { error: column "username" of relation "users" does not exist
 
 export default router;
