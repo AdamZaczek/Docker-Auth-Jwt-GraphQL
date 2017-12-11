@@ -127,6 +127,14 @@ const options = {};
 passport.use(
   new LocalStrategy(options, (username, password, done) => { // eslint-disable-line
     // check to see if the username exists
+    console.log('yolo');
+    console.log(db);
+    console.log(db('users'));
+    console.log(
+      db('users').where({
+        username, // eslint-disable-line
+      }),
+    );
     db('users')
       .where({
         username, // eslint-disable-line

@@ -93,7 +93,7 @@ module.exports = task('run', () =>
   Promise.resolve()
     // Migrate database schema to the latest version
     .then(() => {
-      cp.spawnSync('node', ['tools/db.js', 'migrate'], {
+      cp.spawnSync('babel-node', ['tools/db.js', 'migrate'], {
         stdio: 'inherit',
       });
     })

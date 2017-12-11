@@ -4,9 +4,14 @@ const fs = require('fs');
 const knex = require('knex');
 const task = require('./task');
 
+require('dotenv').load();
+
 // The list of available commands, e.g. node tools/db.js rollback
 const commands = ['version', 'migrate', 'rollback', 'migration', 'seed'];
 const command = process.argv[2];
+
+console.log('hehehe');
+console.log(process.env.DATABASE_URL);
 
 const config = {
   client: 'pg',
@@ -25,7 +30,7 @@ const template = `module.exports.up = async (db) => {\n  \n};\n
 module.exports.down = async (db) => {\n  \n};\n
 module.exports.configuration = { transaction: true };\n`;
 
-module.exports = task('db', async() => {
+module.exports = task('db', async () => {
   let db;
 
   if (!commands.includes(command)) {

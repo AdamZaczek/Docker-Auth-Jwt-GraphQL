@@ -85,7 +85,10 @@ function getSuccessRedirect(req) {
 // });
 
 function handleResponse(res, code, statusMsg) {
-  console.log(res, res.status);
+  // the error { error: column "username" of relation "users" does not exist
+  // leads here, the passport.authenticate method is broken atm
+  // I'm getting code 500 and res.status: undefined
+  console.log(res, code, res.status);
   res.status(code).json({
     status: statusMsg,
   });
@@ -95,10 +98,7 @@ function handleResponse(res, code, statusMsg) {
 router.post('/auth/register', (req, res, next) =>
   createUser(req, res)
     .then(() => {
-      // the error { error: column "username" of relation "users" does not exist
-      // leads here, the passport.authenticate method is broken atm
       passport.authenticate('local', (err, user) => {
-        console.log(err, user);
         if (user) {
           handleResponse(res, 200, 'success');
         }
