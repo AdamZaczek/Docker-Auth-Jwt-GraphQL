@@ -7,6 +7,8 @@ import { Strategy as FacebookStrategy } from 'passport-facebook';
 import db from './db';
 import { comparePass } from './helpers/auth';
 
+console.log('hello from passport.js');
+
 passport.serializeUser((user, done) => {
   done(null, {
     id: user.id,

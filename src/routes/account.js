@@ -4,6 +4,7 @@ import URL from 'url';
 import passport from 'passport';
 import validator from 'validator';
 import { Router } from 'express';
+// this function is broken!
 import { createUser } from '../helpers/auth';
 
 const router = new Router();
@@ -75,6 +76,7 @@ function handleResponse(res, code, statusMsg) {
 
 // const registerRoute = () =>
 router.post('/auth/register', (req, res, next) =>
+  // createUser is not working, it never goes to local strategy
   createUser(req, res)
     .then(() => {
       passport.authenticate('local', (err, user) => {
