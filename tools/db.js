@@ -10,7 +10,6 @@ require('dotenv').load();
 const commands = ['version', 'migrate', 'rollback', 'migration', 'seed'];
 const command = process.argv[2];
 
-console.log('hehehe');
 console.log(process.env.DATABASE_URL);
 
 const config = {

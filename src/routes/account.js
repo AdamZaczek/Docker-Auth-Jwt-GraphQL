@@ -10,11 +10,6 @@ const router = new Router();
 
 // External login providers. Also see src/passport.js.
 const loginProviders = [
-  // {
-  //   // custom login
-  //   provider: 'local',
-  //   options: {},
-  // },
   {
     // https://developers.facebook.com/docs/facebook-login/permissions/
     provider: 'facebook',
@@ -68,27 +63,11 @@ function getSuccessRedirect(req) {
 
 /* in progress */
 
-// const handleResponse = (res, code, statusMsg) => {
-//   res.status(code).json({
-//     status: statusMsg,
-//   });
-// };
-
-// router.post('/register', (req, res, next)  => {
-//   return authHelpers.createUser(req, res)
-//   .then((response) => {
-//     passport.authenticate('local', (err, user, info) => {
-//       if (user) { handleResponse(res, 200, 'success'); }
-//     })(req, res, next);
-//   })
-//   .catch((err) => { handleResponse(res, 500, 'error'); });
-// });
-
 function handleResponse(res, code, statusMsg) {
   // the error { error: column "username" of relation "users" does not exist
   // leads here, the passport.authenticate method is broken atm
   // I'm getting code 500 and res.status: undefined
-  console.log(res, code, res.status);
+  console.log(res, code, statusMsg);
   res.status(code).json({
     status: statusMsg,
   });
