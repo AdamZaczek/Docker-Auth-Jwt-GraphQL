@@ -29,9 +29,7 @@ async function login(req, provider, profile, tokens) {
   if (req.user) {
     user = await db
       .table('users')
-      .where({
-        id: req.user.id,
-      })
+      .where('id', '=', req.user.id)
       .first();
   }
 
