@@ -8,7 +8,7 @@ module.exports.up = async db => {
     // with respect to keyspace fragmentation on disk for the tables because it's time based
     // https://www.postgresql.org/docs/current/static/uuid-ossp.html
     table.uuid('id').notNullable().defaultTo(db.raw('uuid_generate_v1mc()')).primary();
-    table.string('username', 100);
+    table.string('display_name', 100);
     table.string('image_url', 200);
     table.string('password_hash', 128);
     table.timestamps(false, true);
