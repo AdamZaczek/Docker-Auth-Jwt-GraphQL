@@ -16,7 +16,7 @@ services:
     environment:
       - CI=$CI
       - CORS_ORIGIN=http://localhost:3000,http://localhost:3001
-      - DATABASE_URL=postgres://postgres@db:5432/dev
+      - DATABASE_URL=postgres://postgres@db:17583/dev
       - DATABASE_DEBUG=false
       - REDIS_URL=redis://redis:6379/0
       - SESSION_SECRET=wZjwhFtzQsd7r87W6AZw45Sm
@@ -57,7 +57,7 @@ services:
       - db:/var/lib/postgresql/data
       - ./postgres-initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
     ports:
-      - "127.0.0.1:5432:5432" # you can override it via docker-compose.override.yml
+      - "127.0.0.1:17583:17583" # you can override it via docker-compose.override.yml
 
   # Distributed in-memory cache
   redis:
