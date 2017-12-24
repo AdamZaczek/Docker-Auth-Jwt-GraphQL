@@ -1,11 +1,7 @@
-exports.up = async db => {
-  await db.schema.table('users', table => {
-    table.renameColumn('display_name', 'username');
-  });
-};
+exports.up = async db => db.schema.table('users', table => {
+  table.renameColumn('display_name', 'username');
+});
 
-exports.down = async db => {
-  await db.schema.table('users', table => {
-    table.renameColumn('username', 'display_name');
-  });
-};
+exports.down = async db => db.schema.table('users', table => {
+  table.renameColumn('username', 'display_name');
+});
