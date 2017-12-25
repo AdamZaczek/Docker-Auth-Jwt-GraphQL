@@ -1,7 +1,11 @@
 import bcrypt from 'bcryptjs';
 import db from '../db';
 
-// compares user password and hash in database
+/**
+ * compares user password and hash in database
+ * @param {string} userPassword typed password - The title of the book.
+ * @param {string} databasePassword - password hash stored in the database.
+ */
 export const comparePass = (userPassword, databasePassword) =>
   bcrypt.compareSync(userPassword, databasePassword);
 

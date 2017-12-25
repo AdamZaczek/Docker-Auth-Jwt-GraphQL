@@ -123,31 +123,17 @@ const LocalStrategy = require('passport-local').Strategy;
 const options = {};
 
 passport.use(
-  new LocalStrategy(options, (username, password, done) => { // eslint-disable-line
-    // check to see if the username exists
-    // console.log('yolo');
-    // console.log(db);
-    // console.log(db('users'));
-    // console.log(
-    //   db('users').where({
-    //     username, // eslint-disable-line
-    //   }),
-    // );
+  new LocalStrategy(options, (username, password, done) => {
     db('users')
       .where({
-        username, // eslint-disable-line
+        username,
       })
       .first()
       .then(user => {
-        console.log(user);
-        console.log(password, user.password_hash);
         if (!user) return done(null, false);
-        // only this is still not working
         if (!comparePass(password, user.password_hash)) {
-          console.log('it didnt work');
           return done(null, false);
         }
-        console.log('it worked!');
         return done(null, user);
       })
       .catch(err => done(err));
