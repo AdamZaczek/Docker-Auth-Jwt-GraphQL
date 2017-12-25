@@ -140,9 +140,10 @@ passport.use(
       .first()
       .then(user => {
         console.log(user);
+        console.log(password, user.password_hash);
         if (!user) return done(null, false);
         // only this is still not working
-        if (!comparePass(password, user.password)) {
+        if (!comparePass(password, user.password_hash)) {
           console.log('it didnt work');
           return done(null, false);
         }
