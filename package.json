@@ -20,7 +20,7 @@
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
     "graphql": "^0.11.7",
-    "graphql-relay": "^0.5.3",
+    "graphql-relay": "^0.5.4",
     "handlebars": "^4.0.11",
     "handlebars-layouts": "^3.1.4",
     "i18next": "^10.2.1",
@@ -30,7 +30,7 @@
     "juice": "^4.2.2",
     "knex": "^0.14.2",
     "node-fetch": "^1.7.3",
-    "nodemailer": "^4.4.0",
+    "nodemailer": "^4.4.1",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth20": "^1.0.0",
@@ -63,10 +63,10 @@
     "eslint-plugin-flowtype": "^2.39.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-prettier": "^2.3.1",
-    "flow-bin": "^0.59.0",
+    "flow-bin": "^0.60.1",
     "husky": "^0.14.3",
     "lint-staged": "^5.0.0",
-    "prettier": "^1.8.2"
+    "prettier": "^1.9.1"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -93,7 +93,7 @@
     "lint": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" .",
     "fix": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" --fix .",
     "check": "flow check",
-    "test": "jest",
+    "test": "jest --testEnvironment=node",
     "build": "node tools/build.js",
     "build-watch": "babel-node tools/build.js --watch",
     "db-version": "babel-node tools/db.js version",
@@ -104,7 +104,7 @@
     "docker": "docker-compose run --rm api yarn",
     "docker-install": "docker-compose run --rm --no-deps api yarn install",
     "docker-upgrade": "docker-compose run --rm --no-deps api yarn upgrade",
-    "docker-test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml run api sh -c 'yarn && yarn test'",
+    "docker-test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml run api sh -c 'yarn test'",
     "docker-test-watch": "docker-compose run api sh -c 'yarn install && yarn test-watch'",
     "docker-db-version": "docker-compose exec api yarn db-version",
     "docker-db-migrate": "docker-compose exec api yarn db-migrate",
