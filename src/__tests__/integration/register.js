@@ -13,16 +13,14 @@ describe('routes : auth', () => {
   afterEach(() => db.migrate.rollback());
 });
 
-// this test is still failing, apparently I need to larn how to connect to Redis and
-// Postgres via docker or locally
 describe('POST /auth/register', () => {
   it('should register a new user', done => {
     chai
       .request(server)
       .post('/auth/register')
       .send({
-        username: 'michael',
-        password: 'herman',
+        username: 'leonardo',
+        password: 'da vinci',
       })
       .end((err, res) => {
         should.not.exist(err);
