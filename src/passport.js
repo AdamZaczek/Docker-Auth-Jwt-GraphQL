@@ -7,8 +7,6 @@ import { Strategy as FacebookStrategy } from 'passport-facebook';
 import db from './db';
 import { comparePass } from './helpers/auth';
 
-console.log('hello from passport.js');
-
 passport.serializeUser((user, done) => {
   done(null, {
     id: user.id,
@@ -127,24 +125,28 @@ const options = {};
 passport.use(
   new LocalStrategy(options, (username, password, done) => { // eslint-disable-line
     // check to see if the username exists
-    console.log('yolo');
-    console.log(db);
-    console.log(db('users'));
-    console.log(
-      db('users').where({
-        username, // eslint-disable-line
-      }),
-    );
+    // console.log('yolo');
+    // console.log(db);
+    // console.log(db('users'));
+    // console.log(
+    //   db('users').where({
+    //     username, // eslint-disable-line
+    //   }),
+    // );
     db('users')
       .where({
         username, // eslint-disable-line
       })
       .first()
       .then(user => {
+        console.log(user);
         if (!user) return done(null, false);
+        // only this is still not working
         if (!comparePass(password, user.password)) {
+          console.log('it didnt work');
           return done(null, false);
         }
+        console.log('it worked!');
         return done(null, user);
       })
       .catch(err => done(err));
