@@ -1,6 +1,5 @@
 /* eslint-disable no-undef, no-unused-vars */
 
-// require('dotenv').load();
-
+// this one is very strict but right now there's no need for a longer one
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
 // jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;

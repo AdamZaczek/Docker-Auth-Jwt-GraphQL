@@ -4,8 +4,6 @@ const fs = require('fs');
 const knex = require('knex');
 const task = require('./task');
 
-// require('dotenv').load();
-
 // The list of available commands, e.g. node tools/db.js rollback
 const commands = ['version', 'migrate', 'rollback', 'migration', 'seed'];
 const command = process.argv[2];
