@@ -65,10 +65,6 @@ function getSuccessRedirect(req) {
 /* in progress */
 
 function handleResponse(res, code, statusMsg) {
-  // the error { error: column "username" of relation "users" does not exist
-  // leads here, the passport.authenticate method is broken atm
-  // I'm getting code 500 and res.status: undefined
-  console.log(res, code, statusMsg);
   res.status(code).json({
     status: statusMsg,
   });
@@ -125,11 +121,5 @@ router.post('/login/error', (req, res) => {
     errors: req.flash('error'),
   });
 });
-
-// it looks like we still dont have register route
-// console.log(router.stack);
-
-// my error atm:
-// { error: column "username" of relation "users" does not exist
 
 export default router;
