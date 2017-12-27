@@ -6,8 +6,10 @@ import db from '../db';
  * @param {string} userPassword typed password - The title of the book.
  * @param {string} databasePassword - password hash stored in the database.
  */
-export const comparePass = (userPassword, databasePassword) =>
-  bcrypt.compareSync(userPassword, databasePassword);
+export const comparePass = (userPassword, databasePassword) => {
+  console.log(userPassword, databasePassword);
+  return bcrypt.compareSync(userPassword, databasePassword);
+};
 
 export const createUser = req => {
   const salt = bcrypt.genSaltSync();
