@@ -39,8 +39,8 @@ describe('POST /auth/login', () => {
       .request(server)
       .post('/auth/login')
       .send({
-        username: 'Thomas',
-        password: 'Edison',
+        username: 'Rodney Mullen',
+        password: 'noskateboarding',
       })
       .end((err, res) => {
         should.not.exist(err);

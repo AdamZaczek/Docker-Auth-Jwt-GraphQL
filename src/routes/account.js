@@ -84,7 +84,26 @@ router.post('/auth/register', (req, res, next) =>
     .catch(err => handleResponse(err, 500, 'error')),
 );
 
-// Registers route handlers for the external login providers
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user) => {
+    if (err) {
+      handleResponse(res, 500, 'error');
+    }
+    if (!user) {
+      handleResponse(res, 404, 'User not found');
+    }
+    if (user) {
+      req.logIn(user, error => {
+        if (error) {
+          handleResponse(res, 500, 'error');
+        }
+        handleResponse(res, 200, 'success');
+      });
+    }
+  })(req, res, next);
+});
+
+// Registers route handlers for the external login providers, to be removed soon
 loginProviders.forEach(({ provider, options }) => {
   router.get(
     `/login/${provider}`,
