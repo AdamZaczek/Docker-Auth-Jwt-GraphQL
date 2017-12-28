@@ -27,8 +27,9 @@ module.exports.seed = async db => {
         .table('users')
         .insert(user)
         .returning('id')
-        .then(rows =>
-          db
+        .then(rows => {
+          console.log(user);
+          return db
             .table('users')
             .where('id', '=', rows[0])
             .first()
@@ -40,8 +41,8 @@ module.exports.seed = async db => {
                   email: faker.internet.email().toLowerCase(),
                 })
                 .then(() => u),
-            ),
-        )
+            );
+        })
         .then(row => Object.assign(user, row)),
     ),
   );

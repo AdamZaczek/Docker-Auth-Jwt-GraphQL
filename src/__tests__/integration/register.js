@@ -44,7 +44,7 @@ describe('routes : auth', () => {
         .post('/auth/login')
         .send({
           username: 'Rodney Mullen',
-          password_hash: 'noskateboarding',
+          password: 'noskateboarding',
         })
         .end((err, res) => {
           console.log(err);

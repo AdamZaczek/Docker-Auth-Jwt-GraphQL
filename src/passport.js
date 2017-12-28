@@ -8,6 +8,7 @@ import db from './db';
 import { comparePass } from './helpers/auth';
 
 passport.serializeUser((user, done) => {
+  console.log('hi from passport seralize', user);
   done(null, {
     id: user.id,
     username: user.name,
