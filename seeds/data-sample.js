@@ -6,22 +6,20 @@ const bcrypt = require('bcryptjs');
 module.exports.seed = async db => {
   const salt = bcrypt.genSaltSync();
   const hash = bcrypt.hashSync('noskateboarding', salt);
-  console.log('hello from seeder');
   const usersAry = [
     {
       username: 'Rodney Mullen',
       // noskateboarding hashed
-      // password_hash: '$2a$10$I/CgZ.UVILEmzRQWUh3WXeBmPuimEJGcZVGyea3JDXQm6hylwXmG',
       password_hash: hash,
     },
     {
       username: 'Bob Burnquist',
       // noskateboarding hashed
-      // password_hash: '$2a$10$I/CgZ.UVILEmzRQWUh3WXeBmPuimEJGcZVGyea3JDXQm6hylwXmG',
       password_hash: hash,
     },
   ];
   console.log(usersAry);
+  // console.log(db.table('users'));
 
   await Promise.all(
     usersAry.map(user =>

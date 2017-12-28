@@ -84,8 +84,10 @@ router.post('/auth/register', (req, res, next) =>
     .catch(err => handleResponse(err, 500, 'error')),
 );
 
-router.post('/login', (req, res, next) => {
+router.post('/auth/login', (req, res, next) => {
   passport.authenticate('local', (err, user) => {
+    // I'm getting yo null false from this console log, which looks like no user no error
+    // console.log('yo', err, user);
     if (err) {
       handleResponse(res, 500, 'error');
     }
