@@ -124,6 +124,7 @@ const options = {};
 
 passport.use(
   new LocalStrategy(options, (username, password, done) => {
+    console.log('hello from passport local', username, password);
     db('users')
       .where({
         username,

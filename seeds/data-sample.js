@@ -1,21 +1,27 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop */
 
 const faker = require('faker');
+const bcrypt = require('bcryptjs');
 
 module.exports.seed = async db => {
+  const salt = bcrypt.genSaltSync();
+  const hash = bcrypt.hashSync('noskateboarding', salt);
   console.log('hello from seeder');
   const usersAry = [
     {
       username: 'Rodney Mullen',
       // noskateboarding hashed
-      password_hash: '$2a$10$I/CgZ.UVILEmzRQWUh3WXeBmPuimEJGcZVGyea3JDXQm6hylwXmG',
+      // password_hash: '$2a$10$I/CgZ.UVILEmzRQWUh3WXeBmPuimEJGcZVGyea3JDXQm6hylwXmG',
+      password_hash: hash,
     },
     {
       username: 'Bob Burnquist',
       // noskateboarding hashed
-      password_hash: '$2a$10$I/CgZ.UVILEmzRQWUh3WXeBmPuimEJGcZVGyea3JDXQm6hylwXmG',
+      // password_hash: '$2a$10$I/CgZ.UVILEmzRQWUh3WXeBmPuimEJGcZVGyea3JDXQm6hylwXmG',
+      password_hash: hash,
     },
   ];
+  console.log(usersAry);
 
   await Promise.all(
     usersAry.map(user =>
