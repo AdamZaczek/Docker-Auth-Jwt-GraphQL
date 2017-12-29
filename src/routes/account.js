@@ -4,7 +4,7 @@ import URL from 'url';
 import passport from 'passport';
 import validator from 'validator';
 import { Router } from 'express';
-import { createUser } from '../helpers/auth';
+import { createUser, loginRequired } from '../helpers/auth';
 
 const router = new Router();
 
@@ -100,7 +100,7 @@ router.post('/auth/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/auth/logout', (req, res) => {
+router.get('/auth/logout', loginRequired, (req, res) => {
   req.session.destroy();
   handleResponse(res, 200, 'success');
 });

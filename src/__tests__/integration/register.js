@@ -100,4 +100,18 @@ describe('routes : auth', () => {
         });
     });
   });
+
+  it('should throw an error if a user is not logged in', done => {
+    chai
+      .request(server)
+      .get('/auth/logout')
+      .end((err, res) => {
+        should.exist(err);
+        res.redirects.length.should.eql(0);
+        res.status.should.eql(401);
+        res.type.should.eql('application/json');
+        res.body.status.should.eql('Please log in');
+        done();
+      });
+  });
 });
