@@ -100,6 +100,11 @@ router.post('/auth/login', (req, res, next) => {
   })(req, res, next);
 });
 
+router.get('/auth/logout', (req, res) => {
+  req.session.destroy();
+  handleResponse(res, 200, 'success');
+});
+
 // Registers route handlers for the external login providers, to be removed soon
 loginProviders.forEach(({ provider, options }) => {
   router.get(

@@ -32,15 +32,27 @@ function handleExit(options, err) {
   if (options.exit) process.exit();
 }
 
-process.on('exit', handleExit.bind(null, {
-  cleanup: true
-}));
-process.on('SIGINT', handleExit.bind(null, {
-  exit: true
-}));
-process.on('SIGTERM', handleExit.bind(null, {
-  exit: true
-}));
-process.on('uncaughtException', handleExit.bind(null, {
-  exit: true
-}));
+process.on(
+  'exit',
+  handleExit.bind(null, {
+    cleanup: true,
+  }),
+);
+process.on(
+  'SIGINT',
+  handleExit.bind(null, {
+    exit: true,
+  }),
+);
+process.on(
+  'SIGTERM',
+  handleExit.bind(null, {
+    exit: true,
+  }),
+);
+process.on(
+  'uncaughtException',
+  handleExit.bind(null, {
+    exit: true,
+  }),
+);

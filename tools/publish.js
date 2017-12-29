@@ -27,7 +27,8 @@ Options:
 
 // Build the API server locally.
 cp.spawnSync(
-  'docker-compose', [
+  'docker-compose',
+  [
     'run',
     '--rm',
     '--no-deps',
@@ -35,8 +36,9 @@ cp.spawnSync(
     '/bin/sh',
     '-c',
     'yarn install; yarn run build',
-  ], {
-    stdio: 'inherit'
+  ],
+  {
+    stdio: 'inherit',
   },
 );
 
@@ -64,8 +66,10 @@ ssh.on('exit', () => {
   // on the remote server already), start the API server and any dependencies
   // in the background (via -d).
   cp.spawnSync(
-    'ssh', ['-C', host, 'docker-compose', '-f', composeFile, 'up', '-d'], {
-      stdio: 'inherit'
+    'ssh',
+    ['-C', host, 'docker-compose', '-f', composeFile, 'up', '-d'],
+    {
+      stdio: 'inherit',
     },
   );
 

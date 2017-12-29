@@ -10,10 +10,12 @@ export class ValidationError extends Error {
   code = 400;
   state: any;
 
-  constructor(errors: Array < {
-    key: string,
-    message: string
-  } > ) {
+  constructor(
+    errors: Array<{
+      key: string,
+      message: string,
+    }>,
+  ) {
     super('The request is invalid.');
     this.state = errors.reduce((result, error) => {
       if (Object.prototype.hasOwnProperty.call(result, error.key)) {
@@ -40,5 +42,5 @@ export class ForbiddenError extends Error {
 }
 
 export default {
-  report
+  report,
 };
