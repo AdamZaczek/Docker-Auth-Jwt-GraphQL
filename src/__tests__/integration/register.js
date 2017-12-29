@@ -47,7 +47,6 @@ describe('routes : auth', () => {
           password: 'noskateboarding',
         })
         .end((err, res) => {
-          console.log(err);
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(200);
@@ -56,5 +55,23 @@ describe('routes : auth', () => {
           done();
         });
     });
+  });
+
+  it('should not login an unregistered user', done => {
+    chai
+      .request(server)
+      .post('/auth/login')
+      .send({
+        username: 'Daewon Song',
+        password: 'noskateboarding',
+      })
+      .end((err, res) => {
+        should.exist(err);
+        res.redirects.length.should.eql(0);
+        res.status.should.eql(404);
+        res.type.should.eql('application/json');
+        res.body.status.should.eql('User not found');
+        done();
+      });
   });
 });
