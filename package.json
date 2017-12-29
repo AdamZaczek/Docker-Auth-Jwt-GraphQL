@@ -95,12 +95,12 @@
     "check": "flow check",
     "test": "jest --testEnvironment=node",
     "build": "node tools/build.js",
-    "build-watch": "babel-node tools/build.js --watch",
-    "db-version": "babel-node tools/db.js version",
-    "db-migrate": "babel-node tools/db.js migrate",
-    "db-rollback": "babel-node tools/db.js rollback",
-    "db-migration": "babel-node tools/db.js migration",
-    "db-seed": "babel-node tools/db.js seed",
+    "build-watch": "node tools/build.js --watch",
+    "db-version": "node tools/db.js version",
+    "db-migrate": "node tools/db.js migrate",
+    "db-rollback": "node tools/db.js rollback",
+    "db-migration": "node tools/db.js migration",
+    "db-seed": "node tools/db.js seed",
     "docker": "docker-compose run --rm api yarn",
     "docker-install": "docker-compose run --rm --no-deps api yarn install",
     "docker-upgrade": "docker-compose run --rm --no-deps api yarn upgrade",
@@ -112,6 +112,6 @@
     "docker-db-migration": "docker-compose exec api yarn db-migration",
     "docker-db-seed": "docker-compose exec api yarn db-seed",
     "deploy": "node tools/publish.js",
-    "start": "babel-node tools/run.js"
+    "start": "node tools/run.js"
   }
 }
