@@ -4,12 +4,11 @@ import URL from 'url';
 import passport from 'passport';
 import validator from 'validator';
 import { Router } from 'express';
-// this function is broken!
 import { createUser } from '../helpers/auth';
 
 const router = new Router();
 
-// External login providers. Also see src/passport.js.
+// External login providers, to be removed soon. Also see src/passport.js.
 const loginProviders = [
   {
     // https://developers.facebook.com/docs/facebook-login/permissions/
@@ -70,9 +69,7 @@ function handleResponse(res, code, statusMsg) {
   });
 }
 
-// const registerRoute = () =>
 router.post('/auth/register', (req, res, next) =>
-  // createUser is not working, it never goes to local strategy
   createUser(req, res)
     .then(() => {
       passport.authenticate('local', (err, user) => {
@@ -86,8 +83,6 @@ router.post('/auth/register', (req, res, next) =>
 
 router.post('/auth/login', (req, res, next) => {
   passport.authenticate('local', (err, user) => {
-    // I'm getting yo null false from this console log, which looks like no user no error
-    // console.log('yo', err, user);
     if (err) {
       handleResponse(res, 500, 'error');
     }

@@ -18,8 +18,6 @@ module.exports.seed = async db => {
       password_hash: hash,
     },
   ];
-  console.log(usersAry);
-  // console.log(db.table('users'));
 
   await Promise.all(
     usersAry.map(user =>
@@ -27,9 +25,8 @@ module.exports.seed = async db => {
         .table('users')
         .insert(user)
         .returning('id')
-        .then(rows => {
-          console.log(user);
-          return db
+        .then(rows =>
+          db
             .table('users')
             .where('id', '=', rows[0])
             .first()
@@ -41,8 +38,8 @@ module.exports.seed = async db => {
                   email: faker.internet.email().toLowerCase(),
                 })
                 .then(() => u),
-            );
-        })
+            ),
+        )
         .then(row => Object.assign(user, row)),
     ),
   );

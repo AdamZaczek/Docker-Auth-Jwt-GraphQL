@@ -8,7 +8,6 @@ import db from './db';
 import { comparePass } from './helpers/auth';
 
 passport.serializeUser((user, done) => {
-  console.log('hi from passport seralize', user);
   done(null, {
     id: user.id,
     username: user.name,
@@ -125,7 +124,6 @@ const options = {};
 
 passport.use(
   new LocalStrategy(options, (username, password, done) => {
-    console.log('hello from passport local', username, password);
     db('users')
       .where({
         username,
