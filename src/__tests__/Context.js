@@ -5,10 +5,10 @@ import Context from '../Context';
 describe('Context', () => {
   test('ensureIsAuthenticated()', () => {
     const ctx1 = new Context({
-      user: null
+      user: null,
     });
     const ctx2 = new Context({
-      user: {}
+      user: {},
     });
     expect(() => ctx1.ensureIsAuthenticated()).toThrow();
     expect(() => ctx2.ensureIsAuthenticated()).not.toThrow();

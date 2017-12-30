@@ -1,3 +1,5 @@
+// @flow
+
 import chai from 'chai';
 import passportStub from 'passport-stub';
 

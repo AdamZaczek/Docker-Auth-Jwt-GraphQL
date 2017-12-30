@@ -1,3 +1,5 @@
+// @flow
+
 import bcrypt from 'bcryptjs';
 import db from '../db';
 
@@ -6,10 +8,10 @@ import db from '../db';
  * @param {string} userPassword typed password - The title of the book.
  * @param {string} databasePassword - password hash stored in the database.
  */
-export const comparePass = (userPassword, databasePassword) =>
+export const comparePass = (userPassword: string, databasePassword: string) =>
   bcrypt.compareSync(userPassword, databasePassword);
 
-export const createUser = req => {
+export const createUser = (req: any) => {
   const salt = bcrypt.genSaltSync();
   const hash = bcrypt.hashSync(req.body.password, salt);
   return db('users')
@@ -20,7 +22,7 @@ export const createUser = req => {
     .returning('*');
 };
 
-export const loginRequired = (req, res, next) => {
+export const loginRequired = (req: any, res: any, next: any) => {
   if (!req.user)
     return res.status(401).json({
       status: 'Please log in',
