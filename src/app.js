@@ -109,6 +109,10 @@ if (process.env.NODE_ENV !== 'production') {
   app.get('/login', (req, res) => {
     res.render('pages/login');
   });
+
+  app.get('/signup', (req, res) => {
+    res.render('pages/signup');
+  });
 }
 
 // this can still be somehow useful as a reference, leaving it for now
