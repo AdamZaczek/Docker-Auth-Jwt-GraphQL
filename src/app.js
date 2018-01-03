@@ -100,19 +100,6 @@ if (process.env.NODE_ENV !== 'production') {
     });
     res.send(message.html);
   });
-
-  // A route for testing authentication/authorization
-  app.get('/', (req, res) => {
-    res.render('pages/index');
-  });
-
-  app.get('/login', (req, res) => {
-    res.render('pages/login');
-  });
-
-  app.get('/signup', (req, res) => {
-    res.render('pages/signup');
-  });
 }
 
 app.get('/graphql/schema', (req, res) => {
