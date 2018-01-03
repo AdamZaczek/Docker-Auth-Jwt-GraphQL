@@ -1,12 +1,3 @@
-/**
- * Node.js API Starter Kit (https://reactstarter.com/nodejs)
- *
- * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 /* eslint-env jest */
 
 import { assignType, getType, mapTo, mapToMany, mapToValues } from '../';
@@ -25,7 +16,9 @@ describe('utils', () => {
   });
 
   test('getType()', () => {
-    const result1 = getType({ __type: 'Test' });
+    const result1 = getType({
+      __type: 'Test',
+    });
     const result2 = getType({});
     const result3 = getType(undefined);
     expect(result1).toBe('Test');
@@ -35,26 +28,50 @@ describe('utils', () => {
 
   test('mapTo()', () => {
     const result = mapTo([1, 2], x => x.id)([
-      { id: 2, name: 'b' },
-      { id: 1, name: 'a' },
+      {
+        id: 2,
+        name: 'b',
+      },
+      {
+        id: 1,
+        name: 'a',
+      },
     ]);
     expect(result).toMatchSnapshot();
   });
 
   test('mapToMany()', () => {
     const result = mapToMany([1, 2], x => x.id)([
-      { id: 2, name: 'b' },
-      { id: 1, name: 'a' },
-      { id: 1, name: 'c' },
+      {
+        id: 2,
+        name: 'b',
+      },
+      {
+        id: 1,
+        name: 'a',
+      },
+      {
+        id: 1,
+        name: 'c',
+      },
     ]);
     expect(result).toMatchSnapshot();
   });
 
   test('mapToValues()', () => {
     const result = mapToValues([1, 2, 3], x => x.id, x => x.name)([
-      { id: 2, name: 'b' },
-      { id: 1, name: 'a' },
-      { id: 3, name: 'c' },
+      {
+        id: 2,
+        name: 'b',
+      },
+      {
+        id: 1,
+        name: 'a',
+      },
+      {
+        id: 3,
+        name: 'c',
+      },
     ]);
     expect(result).toMatchSnapshot();
   });
