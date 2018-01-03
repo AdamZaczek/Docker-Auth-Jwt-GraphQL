@@ -1,21 +1,12 @@
 /* @flow */
 
 import validator from 'validator';
-import {
-  GraphQLNonNull,
-  GraphQLID,
-  GraphQLString
-} from 'graphql';
-import {
-  fromGlobalId,
-  mutationWithClientMutationId
-} from 'graphql-relay';
+import { GraphQLNonNull, GraphQLID, GraphQLString } from 'graphql';
+import { fromGlobalId, mutationWithClientMutationId } from 'graphql-relay';
 
 import db from '../db';
 import CommentType from './CommentType';
-import {
-  ValidationError
-} from '../errors';
+import { ValidationError } from '../errors';
 
 const outputFields = {
   story: {
@@ -23,18 +14,17 @@ const outputFields = {
   },
 };
 
-function validate(input, {
-  t,
-  user
-}) {
+function validate(input, { t, user }) {
   const errors = [];
   const data = {};
 
   if (!user) {
-    throw new ValidationError([{
-      key: '',
-      message: t('Only authenticated users can add comments.')
-    }, ]);
+    throw new ValidationError([
+      {
+        key: '',
+        message: t('Only authenticated users can add comments.'),
+      },
+    ]);
   }
 
   if (typeof input.text === 'undefined' || input.text.trim() !== '') {
@@ -42,10 +32,12 @@ function validate(input, {
       key: 'text',
       message: t('The comment field cannot be empty.'),
     });
-  } else if (!validator.isLength(input.text, {
+  } else if (
+    !validator.isLength(input.text, {
       min: 20,
-      max: 2000
-    })) {
+      max: 2000,
+    })
+  ) {
     errors.push({
       key: 'text',
       message: t('The comment must be between 20 and 2000 characters long.'),
@@ -56,7 +48,7 @@ function validate(input, {
 
   return {
     data,
-    errors
+    errors,
   };
 }
 
@@ -75,34 +67,21 @@ export const createComment = mutationWithClientMutationId({
   },
   outputFields,
   async mutateAndGetPayload(input, context) {
-    const {
-      t,
-      user,
-      commentById
-    } = context;
-    const {
-      data,
-      errors
-    } = validate(input, context);
+    const { t, user, commentById } = context;
+    const { data, errors } = validate(input, context);
 
     if (errors.length) {
       throw new ValidationError(errors);
     }
 
-    const {
-      type: storyType,
-      id: storyId
-    } = fromGlobalId(input.storyId);
+    const { type: storyType, id: storyId } = fromGlobalId(input.storyId);
 
     if (storyType !== 'Story') {
       throw new Error(t('The story ID is invalid.'));
     }
 
     if (typeof input.parentId !== 'undefined' && input.parentId !== '') {
-      const {
-        type: commentType,
-        id: parentId
-      } = fromGlobalId(input.parentId);
+      const { type: commentType, id: parentId } = fromGlobalId(input.parentId);
       if (commentType !== 'Comment') {
         throw new Error(t('The parent comment ID is invalid.'));
       }
@@ -116,7 +95,7 @@ export const createComment = mutationWithClientMutationId({
       .insert(data)
       .returning('id');
     return commentById.load(rows[0]).then(comment => ({
-      comment
+      comment,
     }));
   },
 });
@@ -133,24 +112,14 @@ export const updateComment = mutationWithClientMutationId({
   },
   outputFields,
   async mutateAndGetPayload(input, context) {
-    const {
-      t,
-      user,
-      commentById
-    } = context;
-    const {
-      type,
-      id
-    } = fromGlobalId(input.id);
+    const { t, user, commentById } = context;
+    const { type, id } = fromGlobalId(input.id);
 
     if (type !== 'Comment') {
       throw new Error(t('The comment ID is invalid.'));
     }
 
-    const {
-      data,
-      errors
-    } = validate(input, context);
+    const { data, errors } = validate(input, context);
     const comment = await db
       .table('comments')
       .where('id', '=', id)
@@ -164,7 +133,7 @@ export const updateComment = mutationWithClientMutationId({
     } else if (comment.author_id !== user.id) {
       errors.push({
         key: '',
-        message: 'You can only edit your own comments.'
+        message: 'You can only edit your own comments.',
       });
     }
 
@@ -179,7 +148,7 @@ export const updateComment = mutationWithClientMutationId({
       .where('id', '=', id)
       .update(data);
     return commentById.load(id).then(x => ({
-      comment: x
+      comment: x,
     }));
   },
 });

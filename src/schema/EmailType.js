@@ -6,12 +6,8 @@ import {
   GraphQLString,
   GraphQLBoolean,
 } from 'graphql';
-import {
-  globalIdField
-} from 'graphql-relay';
-import {
-  nodeInterface
-} from './Node';
+import { globalIdField } from 'graphql-relay';
+import { nodeInterface } from './Node';
 
 export default new GraphQLObjectType({
   name: 'Email',

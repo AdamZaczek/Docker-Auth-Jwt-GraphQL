@@ -1,25 +1,12 @@
 /* @flow */
 /* eslint-disable global-require */
 
-import {
-  nodeDefinitions,
-  fromGlobalId
-} from 'graphql-relay';
-import {
-  assignType,
-  getType
-} from '../utils';
+import { nodeDefinitions, fromGlobalId } from 'graphql-relay';
+import { assignType, getType } from '../utils';
 
-const {
-  nodeInterface,
-  nodeField: node,
-  nodesField: nodes
-} = nodeDefinitions(
+const { nodeInterface, nodeField: node, nodesField: nodes } = nodeDefinitions(
   (globalId, context) => {
-    const {
-      type,
-      id
-    } = fromGlobalId(globalId);
+    const { type, id } = fromGlobalId(globalId);
 
     switch (type) {
       case 'User':
@@ -50,8 +37,4 @@ const {
   },
 );
 
-export {
-  nodeInterface,
-  node,
-  nodes
-};
+export { nodeInterface, node, nodes };
