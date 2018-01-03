@@ -115,25 +115,6 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// this can still be somehow useful as a reference, leaving it for now
-// if (req.user) {
-//   res.send(
-//     `<p>${req.t('Welcome, {{user}}!', {
-//       user: req.user.displayName,
-//     })} (<a href="javascript:fetch('/login/clear', { method: 'POST', credentials: 'include' }).then(() => window.location = '/')">${req.t(
-//       'log out',
-//     )}</a>)</p>`,
-//   );
-// } else {
-//   res.send(
-//     `<p>${req.t('Welcome, guest!')} (<a href="/login/facebook">${req.t(
-//       'sign in',
-//     )}</a>)</p>`,
-//   );
-// }
-//   });
-// }
-
 app.get('/graphql/schema', (req, res) => {
   res.type('text/plain').send(printSchema(schema));
 });
