@@ -1,6 +1,7 @@
 {
-  "name": "api",
-  "version": "0.0.0",
+  "author": "Adam Żaczek",
+  "name": "authentication",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "bcrypt": "^1.0.3",
