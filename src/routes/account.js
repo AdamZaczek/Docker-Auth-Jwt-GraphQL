@@ -62,7 +62,9 @@ router.post('/login/error', (req, res) => {
 
 // Next 3 Routes Are For Testing Authentication
 router.get('/', (req, res) => {
-  res.render('pages/index');
+  res.render('pages/index', {
+    user: req.user,
+  });
 });
 
 router.get('/login', (req, res) => {
