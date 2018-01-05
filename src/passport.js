@@ -1,6 +1,5 @@
 /* @flow */
 /* eslint-disable no-param-reassign, no-underscore-dangle, max-len */
-/* to do - make new folder for passport strategies */
 
 import passport from 'passport';
 import db from './db';
@@ -10,7 +9,6 @@ passport.serializeUser((user, done) => {
   done(null, {
     id: user.id,
     username: user.name,
-    imageUrl: user.imageUrl,
   });
 });
 
