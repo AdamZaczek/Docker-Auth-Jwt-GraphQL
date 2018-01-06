@@ -4,8 +4,8 @@ import { GraphQLSchema, GraphQLObjectType } from 'graphql';
 
 import { me } from './User';
 import { node, nodes } from './Node';
-import { stories, createStory, updateStory } from './Story';
-import { createComment, updateComment } from './Comment';
+// import { stories, createStory, updateStory } from './Story';
+// import { createComment, updateComment } from './Comment';
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -14,16 +14,16 @@ export default new GraphQLSchema({
       me,
       node,
       nodes,
-      stories,
+      // stories,
     },
   }),
   mutation: new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-      createStory,
-      updateStory,
-      createComment,
-      updateComment,
+      // createStory,
+      // updateStory,
+      // createComment,
+      // updateComment,
     },
   }),
 });

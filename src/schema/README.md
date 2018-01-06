@@ -15,16 +15,16 @@ export default new GraphQLSchema({
       me,
       node,
       nodes,
-      stories,
+      // stories,
     },
   }),
   mutation: new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-      createStory,
-      updateStory,
-      createComment,
-      updateComment,
+      // createStory,
+      // updateStory,
+      // createComment,
+      // updateComment,
     },
   }),
 });
