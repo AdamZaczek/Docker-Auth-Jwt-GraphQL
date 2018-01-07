@@ -17,13 +17,13 @@ export default new GraphQLSchema({
       // stories,
     },
   }),
-  mutation: new GraphQLObjectType({
-    name: 'Mutation',
-    fields: {
-      // createStory,
-      // updateStory,
-      // createComment,
-      // updateComment,
-    },
-  }),
+  // mutation: new GraphQLObjectType({
+  //   name: 'Mutation',
+  //   fields: {
+  //     createStory,
+  //     updateStory,
+  //     createComment,
+  //     updateComment,
+  //   },
+  // }),
 });
