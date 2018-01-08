@@ -1,10 +1,12 @@
-// @flow
+// flow
+// todo- fix flow - AGAIN
 
 import chai from 'chai';
 import passportStub from 'passport-stub';
 
 import server from '../../app';
 import db from '../../db';
+import { encodeToken } from '../../helpers/encodeToken';
 
 const should = chai.should();
 const chaiHttp = require('chai-http');
@@ -115,5 +117,16 @@ describe('routes : auth', () => {
         res.body.status.should.eql('Please log in');
         done();
       });
+  });
+
+  describe('encodeToken()', () => {
+    it('should return a token', done => {
+      const results = encodeToken({
+        id: 1,
+      });
+      should.exist(results);
+      results.should.be.a('string');
+      done();
+    });
   });
 });

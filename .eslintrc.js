@@ -11,6 +11,7 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', prettierOptions],
     'flowtype/define-flow-type': 1,
+    'import/prefer-default-export': 0,
   },
   env: {
     browser: true,
