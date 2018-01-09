@@ -23,7 +23,6 @@ router.post('/auth/register', (req, res, next) =>
       passport.authenticate('local', (err, user) => {
         if (user) {
           handleResponse(res, 200, 'success');
-          // res.redirect('/');
         }
       })(req, res, next);
     })
@@ -55,7 +54,6 @@ router.post('/auth/login', (req, res, next) => {
       //     handleResponse(res, 500, 'error');
       //   }
       //   handleResponse(res, 200, 'success');
-      //   // res.redirect('/');
       // });
     }
   })(req, res, next);
@@ -64,7 +62,6 @@ router.post('/auth/login', (req, res, next) => {
 router.get('/auth/logout', loginRequired, (req, res) => {
   req.session.destroy();
   handleResponse(res, 200, 'success');
-  // res.redirect('/');
 });
 
 // Allows to fetch the last login error(s) (which is usefull for single-page apps)
