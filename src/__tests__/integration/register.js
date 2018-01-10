@@ -6,7 +6,7 @@ import passportStub from 'passport-stub';
 
 import server from '../../app';
 import db from '../../db';
-import { encodeToken } from '../../helpers/encodeToken';
+import { encodeToken, decodeToken } from '../../helpers/jwtHelpers';
 
 const should = chai.should();
 const chaiHttp = require('chai-http');
@@ -127,6 +127,21 @@ describe('routes : auth', () => {
       should.exist(results);
       results.should.be.a('string');
       done();
+    });
+  });
+
+  describe('decodeToken()', () => {
+    it('should return a payload', done => {
+      const token = encodeToken({
+        id: 1,
+      });
+      should.exist(token);
+      token.should.be.a('string');
+      decodeToken(token, (err, res) => {
+        should.not.exist(err);
+        res.sub.should.eql(1);
+        done();
+      });
     });
   });
 });

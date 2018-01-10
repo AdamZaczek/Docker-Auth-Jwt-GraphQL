@@ -6,16 +6,23 @@ import passport from 'passport';
 import { Router } from 'express';
 import jwt from 'express-jwt';
 import { createUser, loginRequired } from '../helpers/auth';
+// import { encodeToken } from '../helpers/jwtHelpers';
 // import { encodeToken } from '../helpers/encodeToken';
 // const jwt = require('express-jwt');
 
 const router = new Router();
 
-function handleResponse(res, code, statusMsg) {
+// const token = function handleResponse(res, code, statusMsg) {
+//   res.status(code).json({
+//     status: statusMsg,
+//   });
+// };
+
+const handleResponse = (res, code, statusMsg) => {
   res.status(code).json({
     status: statusMsg,
   });
-}
+};
 
 router.post('/auth/register', (req, res, next) =>
   createUser(req)
