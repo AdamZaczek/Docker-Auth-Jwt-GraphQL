@@ -7,7 +7,6 @@ import { Router } from 'express';
 import jwt from 'express-jwt';
 import { createUser, loginRequired } from '../helpers/auth';
 // import { encodeToken } from '../helpers/jwtHelpers';
-// import { encodeToken } from '../helpers/encodeToken';
 // const jwt = require('express-jwt');
 
 const router = new Router();
