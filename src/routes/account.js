@@ -11,12 +11,6 @@ import { createUser, loginRequired } from '../helpers/auth';
 
 const router = new Router();
 
-// const token = function handleResponse(res, code, statusMsg) {
-//   res.status(code).json({
-//     status: statusMsg,
-//   });
-// };
-
 const handleResponse = (res, code, statusMsg) => {
   res.status(code).json({
     status: statusMsg,
