@@ -3,10 +3,17 @@
 // import URL from 'url';
 import passport from 'passport';
 // import validator from 'validator';
-import { Router } from 'express';
+import {
+  Router
+} from 'express';
 import jwt from 'express-jwt';
-import { createUser, loginRequired } from '../helpers/auth';
-// import { encodeToken } from '../helpers/jwtHelpers';
+import {
+  createUser,
+  loginRequired
+} from '../helpers/auth';
+import {
+  encodeToken
+} from '../helpers/jwtHelpers';
 // const jwt = require('express-jwt');
 
 const router = new Router();
@@ -19,14 +26,14 @@ const handleResponse = (res, code, statusMsg) => {
 
 router.post('/auth/register', (req, res, next) =>
   createUser(req)
-    .then(() => {
-      passport.authenticate('local', (err, user) => {
-        if (user) {
-          handleResponse(res, 200, 'success');
-        }
-      })(req, res, next);
-    })
-    .catch(err => handleResponse(err, 500, 'error')),
+  .then(() => {
+    passport.authenticate('local', (err, user) => {
+      if (user) {
+        handleResponse(res, 200, 'success');
+      }
+    })(req, res, next);
+  })
+  .catch(err => handleResponse(err, 500, 'error')),
 );
 
 router.post('/auth/login', (req, res, next) => {
@@ -38,13 +45,15 @@ router.post('/auth/login', (req, res, next) => {
       handleResponse(res, 404, 'User not found');
     }
     if (user) {
-      const token = jwt.encode(
-        {
-          username: user.username,
-        },
-        // this is just to test how it works, chill future stalkers
-        'shhhhhhared-secret',
-      );
+      // const token = jwt.encode(
+      //   {
+      //     username: user.username,
+      //   },
+      //   // this is just to test how it works, chill future stalkers
+      //   'shhhhhhared-secret',
+      // );
+      // console.log(token);
+      const token = encodeToken(user);
       console.log(token);
       res.json({
         token,
@@ -74,7 +83,7 @@ router.post('/login/error', (req, res) => {
 // Next 3 Routes Are For Testing Authentication
 router.get('/', (req, res) => {
   res.render('pages/index', {
-    user: req.user,
+    // user: req.user,
   });
 });
 
