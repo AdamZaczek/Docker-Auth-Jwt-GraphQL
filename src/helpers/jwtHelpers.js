@@ -1,13 +1,11 @@
 const moment = require('moment');
-const jwt = require('jwt-simple');
+const jwt = require('jsonwebtoken');
 
 export const encodeToken = user =>
-  jwt.encode(
-    {
+  jwt.sign({
       username: user.username,
     },
-    // this is just to test how it works, chill future stalkers
-    'shhhhhhared-secret',
+    process.env.TOKEN_SECRET,
   );
 
 // export const encodeToken = user => {

@@ -6,7 +6,10 @@ import passportStub from 'passport-stub';
 
 import server from '../../app';
 import db from '../../db';
-import { encodeToken, decodeToken } from '../../helpers/jwtHelpers';
+import {
+  encodeToken,
+  decodeToken
+} from '../../helpers/jwtHelpers';
 
 const should = chai.should();
 const chaiHttp = require('chai-http');
@@ -17,9 +20,9 @@ passportStub.install(server);
 describe('routes : auth', () => {
   beforeEach(() =>
     db.migrate
-      .rollback()
-      .then(() => db.migrate.latest())
-      .then(() => db.seed.run()),
+    .rollback()
+    .then(() => db.migrate.latest())
+    .then(() => db.seed.run()),
   );
 
   afterEach(() => {
@@ -134,6 +137,7 @@ describe('routes : auth', () => {
     it('should return a payload', done => {
       const token = encodeToken({
         id: 1,
+        username: 'Rodney'
       });
       should.exist(token);
       token.should.be.a('string');

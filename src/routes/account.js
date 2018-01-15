@@ -3,17 +3,10 @@
 // import URL from 'url';
 import passport from 'passport';
 // import validator from 'validator';
-import {
-  Router
-} from 'express';
+import { Router } from 'express';
 import jwt from 'express-jwt';
-import {
-  createUser,
-  loginRequired
-} from '../helpers/auth';
-import {
-  encodeToken
-} from '../helpers/jwtHelpers';
+import { createUser, loginRequired } from '../helpers/auth';
+import { encodeToken } from '../helpers/jwtHelpers';
 // const jwt = require('express-jwt');
 
 const router = new Router();
@@ -26,14 +19,14 @@ const handleResponse = (res, code, statusMsg) => {
 
 router.post('/auth/register', (req, res, next) =>
   createUser(req)
-  .then(() => {
-    passport.authenticate('local', (err, user) => {
-      if (user) {
-        handleResponse(res, 200, 'success');
-      }
-    })(req, res, next);
-  })
-  .catch(err => handleResponse(err, 500, 'error')),
+    .then(() => {
+      passport.authenticate('local', (err, user) => {
+        if (user) {
+          handleResponse(res, 200, 'success');
+        }
+      })(req, res, next);
+    })
+    .catch(err => handleResponse(err, 500, 'error')),
 );
 
 router.post('/auth/login', (req, res, next) => {
