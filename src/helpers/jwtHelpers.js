@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 export const encodeToken = user =>
   jwt.sign({
-      username: user.username,
+      id: user.id,
     },
     process.env.TOKEN_SECRET,
   );
