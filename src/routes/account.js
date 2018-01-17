@@ -4,10 +4,8 @@
 import passport from 'passport';
 // import validator from 'validator';
 import { Router } from 'express';
-import jwt from 'express-jwt';
 import { createUser, loginRequired } from '../helpers/auth';
 import { encodeToken } from '../helpers/jwtHelpers';
-// const jwt = require('express-jwt');
 
 const router = new Router();
 
@@ -38,16 +36,7 @@ router.post('/auth/login', (req, res, next) => {
       handleResponse(res, 404, 'User not found');
     }
     if (user) {
-      // const token = jwt.encode(
-      //   {
-      //     username: user.username,
-      //   },
-      //   // this is just to test how it works, chill future stalkers
-      //   'shhhhhhared-secret',
-      // );
-      // console.log(token);
       const token = encodeToken(user);
-      console.log(token);
       res.json({
         token,
       });

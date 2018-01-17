@@ -6,10 +6,7 @@ import passportStub from 'passport-stub';
 
 import server from '../../app';
 import db from '../../db';
-import {
-  encodeToken,
-  decodeToken
-} from '../../helpers/jwtHelpers';
+import { encodeToken, decodeToken } from '../../helpers/jwtHelpers';
 
 const should = chai.should();
 const chaiHttp = require('chai-http');
@@ -20,9 +17,9 @@ passportStub.install(server);
 describe('routes : auth', () => {
   beforeEach(() =>
     db.migrate
-    .rollback()
-    .then(() => db.migrate.latest())
-    .then(() => db.seed.run()),
+      .rollback()
+      .then(() => db.migrate.latest())
+      .then(() => db.seed.run()),
   );
 
   // this is causing knex_migration_lock table error because
@@ -142,7 +139,7 @@ describe('routes : auth', () => {
       });
       should.exist(token);
       token.should.be.a('string');
-      decodeToken(token, (err, res) => {
+      decodeToken(token, err => {
         should.not.exist(err);
         done();
       });

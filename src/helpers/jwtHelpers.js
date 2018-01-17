@@ -2,22 +2,12 @@ const moment = require('moment');
 const jwt = require('jsonwebtoken');
 
 export const encodeToken = user =>
-  jwt.sign({
+  jwt.sign(
+    {
       id: user.id,
     },
     process.env.TOKEN_SECRET,
   );
-
-// export const encodeToken = user => {
-//   const playload = {
-//     exp: moment()
-//       .add(14, 'days')
-//       .unix(),
-//     iat: moment().unix(),
-//     sub: user.id,
-//   };
-//   return jwt.encode(playload, process.env.TOKEN_SECRET);
-// };
 
 export const decodeToken = (token, callback) => {
   const payload = jwt.decode(token, process.env.TOKEN_SECRET);
