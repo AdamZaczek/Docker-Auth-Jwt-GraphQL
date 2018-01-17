@@ -139,9 +139,8 @@ describe('routes : auth', () => {
       });
       should.exist(token);
       token.should.be.a('string');
-      decodeToken(token, (err, res) => {
+      decodeToken(token, err => {
         should.not.exist(err);
-        console.log(res);
         done();
       });
     });
