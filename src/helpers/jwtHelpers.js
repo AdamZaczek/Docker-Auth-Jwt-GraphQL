@@ -4,6 +4,10 @@ const jwt = require('jsonwebtoken');
 export const encodeToken = user =>
   jwt.sign(
     {
+      exp: moment()
+        .add(90, 'days')
+        .unix(),
+      iat: moment().unix(),
       id: user.id,
     },
     process.env.TOKEN_SECRET,
