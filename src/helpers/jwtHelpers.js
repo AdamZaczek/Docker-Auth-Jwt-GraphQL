@@ -1,13 +1,13 @@
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 
-export const encodeToken = user =>
+export const encodeToken = ({ id }) =>
   jwt.sign(
     {
       exp: moment()
         .add(90, 'days')
         .unix(),
-      id: user.id,
+      id,
     },
     process.env.TOKEN_SECRET,
   );
