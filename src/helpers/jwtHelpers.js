@@ -7,7 +7,6 @@ export const encodeToken = user =>
       exp: moment()
         .add(90, 'days')
         .unix(),
-      iat: moment().unix(),
       id: user.id,
     },
     process.env.TOKEN_SECRET,
