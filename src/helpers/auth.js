@@ -12,8 +12,10 @@ export const comparePass = (userPassword: string, databasePassword: string) =>
   bcrypt.compareSync(userPassword, databasePassword);
 
 export const createUser = (req: any) => {
+  console.log(req);
   const salt = bcrypt.genSaltSync();
   const hash = bcrypt.hashSync(req.body.password, salt);
+  console.log(salt);
   return db('users')
     .insert({
       username: req.body.username,

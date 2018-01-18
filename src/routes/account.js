@@ -17,7 +17,8 @@ const handleResponse = (res, code, statusMsg) => {
 
 router.post('/auth/register', (req, res, next) =>
   createUser(req)
-    .then(() => {
+    .then(user => {
+      console.log(user);
       passport.authenticate('local', (err, user) => {
         if (user) {
           handleResponse(res, 200, 'success');
@@ -27,7 +28,72 @@ router.post('/auth/register', (req, res, next) =>
     .catch(err => handleResponse(err, 500, 'error')),
 );
 
+// router.post('/auth/register', (req, res) => {
+//   console.log('yo there', req);
+//   createUser(req).then(user => {
+//     console.log(user);
+//     return encodeToken(user[0])
+//       .then(token => {
+//         res.status(200).json({
+//           status: 'success',
+//           token,
+//         });
+//       })
+//       .catch(err => {
+//         res.status(500).json({
+//           status: 'error',
+//           err,
+//         });
+//       });
+//   });
+// });
+
+// router.post('/auth/register', (req, res) =>
+//   createUser(req).then(user => {
+//     console.log(user);
+//     return encodeToken(user[0])
+//       .then(token => {
+//         res.status(200).json({
+//           status: 'success',
+//           token,
+//         });
+//       })
+//       .catch(err => {
+//         res.status(500).json({
+//           status: 'error',
+//           err,
+//         });
+//       });
+//   }),
+// );
+
+// passport.authenticate('local', (err, user) => {
+//   if (user) {
+//     handleResponse(res, 200, 'success');
+//   }
+// })(req, res, next);
+// })
+// .catch(err => handleResponse(err, 500, 'error')),
+
+// router.post('/register', (req, res, next) =>
+//   authHelpers
+//     .createUser(req)
+//     .then(user => localAuth.encodeToken(user[0]))
+//     .then(token => {
+//       res.status(200).json({
+//         status: 'success',
+//         token: token,
+//       });
+//     })
+//     .catch(err => {
+//       res.status(500).json({
+//         status: 'error',
+//       });
+//     }),
+// );
+
 router.post('/auth/login', (req, res, next) => {
+  console.log('hey from /auth/login');
   passport.authenticate('local', (err, user) => {
     if (err) {
       handleResponse(res, 500, 'error');

@@ -2,7 +2,7 @@
 // todo- fix flow - AGAIN
 
 import chai from 'chai';
-import passportStub from 'passport-stub';
+// import passportStub from 'passport-stub';
 
 import server from '../../app';
 import db from '../../db';
@@ -12,7 +12,7 @@ const should = chai.should();
 const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
-passportStub.install(server);
+// passportStub.install(server);
 
 describe('routes : auth', () => {
   beforeEach(() =>
@@ -24,10 +24,10 @@ describe('routes : auth', () => {
 
   // this is causing knex_migration_lock table error because
   // there are no sessions anymore so no logout function
-  // afterEach(() => {
+  // afterEach(() =>
   //   passportStub.logout();
-  //   return db.migrate.rollback();
-  // });
+  //   db.migrate.rollback(),
+  // );
 
   describe('POST /auth/register', () => {
     it('should register a new user', done => {
@@ -39,6 +39,7 @@ describe('routes : auth', () => {
           password: 'Da Vinci',
         })
         .end((err, res) => {
+          // console.log(err);
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(200);
@@ -59,6 +60,7 @@ describe('routes : auth', () => {
           password: 'noskateboarding',
         })
         .end((err, res) => {
+          console.log(err);
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(200);
