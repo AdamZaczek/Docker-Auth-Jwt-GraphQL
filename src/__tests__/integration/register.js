@@ -50,6 +50,23 @@ describe('routes : auth', () => {
     });
   });
 
+  describe('POST /auth/register', () => {
+    it('should register a new user', done => {
+      chai
+        .request(server)
+        .get('/')
+        .end((err, res) => {
+          console.log(res, err);
+          // should.not.exist(err);
+          // res.redirects.length.should.eql(0);
+          // res.status.should.eql(200);
+          // res.type.should.eql('application/json');
+          // res.body.status.should.eql('success');
+          done();
+        });
+    });
+  });
+
   describe('POST /auth/login', () => {
     it('should login a user', done => {
       chai

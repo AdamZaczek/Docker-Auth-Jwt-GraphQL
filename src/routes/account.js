@@ -130,6 +130,7 @@ router.post('/login/error', (req, res) => {
 
 // Next 3 Routes Are For Testing Authentication
 router.get('/', (req, res) => {
+  console.log('yay from index page');
   res.render('pages/index', {
     // user: req.user,
   });
