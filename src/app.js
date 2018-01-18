@@ -72,21 +72,21 @@ app.use(
   }),
 );
 app.use(bodyParser.json());
-app.use(
-  session({
-    store: new (connectRedis(session))({
-      client: redis,
-    }),
-    name: 'sid',
-    resave: true,
-    saveUninitialized: true,
-    secret: process.env.SESSION_SECRET,
-  }),
-);
+// app.use(
+//   session({
+//     store: new (connectRedis(session))({
+//       client: redis,
+//     }),
+//     name: 'sid',
+//     resave: true,
+//     saveUninitialized: true,
+//     secret: process.env.SESSION_SECRET,
+//   }),
+// );
 app.use(i18nextMiddleware.handle(i18next));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(flash());
 
 app.use(accountRoutes);
 

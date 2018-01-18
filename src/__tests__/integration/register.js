@@ -15,12 +15,16 @@ chai.use(chaiHttp);
 // passportStub.install(server);
 
 describe('routes : auth', () => {
-  beforeEach(() =>
-    db.migrate
-      .rollback()
-      .then(() => db.migrate.latest())
-      .then(() => db.seed.run()),
-  );
+  beforeEach(() => db.migrate.rollback().then(() => db.migrate.latest()));
+
+  afterEach(() => db.migrate.rollback());
+
+  // beforeEach(() =>
+  //   db.migrate
+  //     .rollback()
+  //     .then(() => db.migrate.latest())
+  //     .then(() => db.seed.run()),
+  // );
 
   // this is causing knex_migration_lock table error because
   // there are no sessions anymore so no logout function
@@ -40,6 +44,7 @@ describe('routes : auth', () => {
         })
         .end((err, res) => {
           // console.log(err);
+          console.log('guess it worked');
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(200);
@@ -56,7 +61,7 @@ describe('routes : auth', () => {
         .request(server)
         .get('/')
         .end((err, res) => {
-          console.log(res, err);
+          // console.log(res, err);
           // should.not.exist(err);
           // res.redirects.length.should.eql(0);
           // res.status.should.eql(200);
@@ -77,7 +82,7 @@ describe('routes : auth', () => {
           password: 'noskateboarding',
         })
         .end((err, res) => {
-          console.log(err);
+          // console.log(err);
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(200);
@@ -106,25 +111,25 @@ describe('routes : auth', () => {
       });
   });
 
-  describe('GET /auth/logout', () => {
-    it('should logout a user', done => {
-      passportStub.login({
-        username: 'Rodney Mullen',
-        password: 'noskateboarding',
-      });
-      chai
-        .request(server)
-        .get('/auth/logout')
-        .end((err, res) => {
-          should.not.exist(err);
-          res.redirects.length.should.eql(0);
-          res.status.should.eql(200);
-          res.type.should.eql('application/json');
-          res.body.status.should.eql('success');
-          done();
-        });
-    });
-  });
+  // describe('GET /auth/logout', () => {
+  //   it('should logout a user', done => {
+  //     passportStub.login({
+  //       username: 'Rodney Mullen',
+  //       password: 'noskateboarding',
+  //     });
+  //     chai
+  //       .request(server)
+  //       .get('/auth/logout')
+  //       .end((err, res) => {
+  //         should.not.exist(err);
+  //         res.redirects.length.should.eql(0);
+  //         res.status.should.eql(200);
+  //         res.type.should.eql('application/json');
+  //         res.body.status.should.eql('success');
+  //         done();
+  //       });
+  //   });
+  // });
 
   it('should throw an error if a user is not logged in', done => {
     chai

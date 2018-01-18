@@ -1,7 +1,7 @@
 /* @flow */
 
 // import URL from 'url';
-import passport from 'passport';
+// import passport from 'passport';
 // import validator from 'validator';
 import { Router } from 'express';
 import { createUser, loginRequired } from '../helpers/auth';
@@ -15,38 +15,42 @@ const handleResponse = (res, code, statusMsg) => {
   });
 };
 
-router.post('/auth/register', (req, res, next) =>
-  createUser(req)
-    .then(user => {
-      console.log(user);
-      passport.authenticate('local', (err, user) => {
-        if (user) {
-          handleResponse(res, 200, 'success');
-        }
-      })(req, res, next);
-    })
-    .catch(err => handleResponse(err, 500, 'error')),
-);
+// router.post('/auth/register', (req, res, next) =>
+//   createUser(req)
+//     .then(user => {
+//       console.log(user);
+//       passport.authenticate('local', (err, user) => {
+//         if (user) {
+//           handleResponse(res, 200, 'success');
+//         }
+//       })(req, res, next);
+//     })
+//     .catch(err => handleResponse(err, 500, 'error')),
+// );
 
-// router.post('/auth/register', (req, res) => {
-//   console.log('yo there', req);
-//   createUser(req).then(user => {
-//     console.log(user);
-//     return encodeToken(user[0])
-//       .then(token => {
-//         res.status(200).json({
-//           status: 'success',
-//           token,
-//         });
-//       })
-//       .catch(err => {
-//         res.status(500).json({
-//           status: 'error',
-//           err,
-//         });
-//       });
-//   });
-// });
+router.post('/auth/register', (req, res) => {
+  createUser(req).then(user => {
+    // console.log(user);
+    const token = encodeToken(user[0]);
+    res.status(200).json({
+      status: 'success',
+      token,
+    });
+    // return encodeToken(user[0])
+    //   .then(token => {
+    //     res.status(200).json({
+    //       status: 'success',
+    //       token,
+    //     });
+    //   })
+    //   .catch(err => {
+    //     res.status(500).json({
+    //       status: 'error',
+    //       err,
+    //     });
+    //   });
+  });
+});
 
 // router.post('/auth/register', (req, res) =>
 //   createUser(req).then(user => {
