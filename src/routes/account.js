@@ -32,9 +32,15 @@ router.post('/auth/register', (req, res) => {
   createUser(req).then(user => {
     // console.log(user);
     const token = encodeToken(user[0]);
-    res.status(200).json({
-      status: 'success',
-      token,
+    if (token) {
+      res.status(200).json({
+        status: 'success',
+        token,
+      });
+    }
+    res.status(503).json({
+      status: 'error',
+      message: 'Something went wrong',
     });
     // return encodeToken(user[0])
     //   .then(token => {
@@ -96,29 +102,50 @@ router.post('/auth/register', (req, res) => {
 //     }),
 // );
 
-router.post('/auth/login', (req, res, next) => {
-  console.log('hey from /auth/login');
-  passport.authenticate('local', (err, user) => {
-    if (err) {
-      handleResponse(res, 500, 'error');
-    }
-    if (!user) {
-      handleResponse(res, 404, 'User not found');
-    }
-    if (user) {
-      const token = encodeToken(user);
-      res.json({
+router.post('/login', (req, res, next) => {
+  const { username, password } = req.body;
+  getUser(username)
+    .then(response => {
+      authHelpers.comparePass(password, response.password);
+      return response;
+    })
+    .then(response => localAuth.encodeToken(response))
+    .then(token => {
+      res.status(200).json({
+        status: 'success',
         token,
       });
-      // req.logIn(user, error => {
-      //   if (error) {
-      //     handleResponse(res, 500, 'error');
-      //   }
-      //   handleResponse(res, 200, 'success');
-      // });
-    }
-  })(req, res, next);
+    })
+    .catch(err => {
+      res.status(500).json({
+        status: 'error',
+      });
+    });
 });
+
+// router.post('/auth/login', (req, res, next) => {
+//   console.log('hey from /auth/login');
+//   passport.authenticate('local', (err, user) => {
+//     if (err) {
+//       handleResponse(res, 500, 'error');
+//     }
+//     if (!user) {
+//       handleResponse(res, 404, 'User not found');
+//     }
+//     if (user) {
+//       const token = encodeToken(user);
+//       res.json({
+//         token,
+//       });
+//       // req.logIn(user, error => {
+//       //   if (error) {
+//       //     handleResponse(res, 500, 'error');
+//       //   }
+//       //   handleResponse(res, 200, 'success');
+//       // });
+//     }
+//   })(req, res, next);
+// });
 
 router.get('/auth/logout', loginRequired, (req, res) => {
   req.session.destroy();

@@ -8,8 +8,8 @@ import db from '../db';
  * @param {string} userPassword typed password - The title of the book.
  * @param {string} databasePassword - password hash stored in the database.
  */
-export const comparePass = (userPassword: string, databasePassword: string) =>
-  bcrypt.compareSync(userPassword, databasePassword);
+// export const comparePass = (userPassword: string, databasePassword: string) =>
+//   bcrypt.compareSync(userPassword, databasePassword);
 
 export const createUser = (req: any) => {
   const salt = bcrypt.genSaltSync();
@@ -28,4 +28,17 @@ export const loginRequired = (req: any, res: any, next: any) => {
       status: 'Please log in',
     });
   return next();
+};
+
+export const getUser = (username: string) =>
+  db('users')
+    .where({
+      username,
+    })
+    .first();
+
+export const comparePass = (userPassword: string, databasePassword: string) => {
+  const bool = bcrypt.compareSync(userPassword, databasePassword);
+  if (!bool) throw new Error('password does not match');
+  else return true;
 };
