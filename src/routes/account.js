@@ -4,7 +4,12 @@
 // import passport from 'passport';
 // import validator from 'validator';
 import { Router } from 'express';
-import { createUser, loginRequired } from '../helpers/auth';
+import {
+  createUser,
+  comparePass,
+  getUser,
+  loginRequired,
+} from '../helpers/auth';
 import { encodeToken } from '../helpers/jwtHelpers';
 
 const router = new Router();
@@ -15,19 +20,6 @@ const handleResponse = (res, code, statusMsg) => {
   });
 };
 
-// router.post('/auth/register', (req, res, next) =>
-//   createUser(req)
-//     .then(user => {
-//       console.log(user);
-//       passport.authenticate('local', (err, user) => {
-//         if (user) {
-//           handleResponse(res, 200, 'success');
-//         }
-//       })(req, res, next);
-//     })
-//     .catch(err => handleResponse(err, 500, 'error')),
-// );
-
 router.post('/auth/register', (req, res) => {
   createUser(req).then(user => {
     // console.log(user);
@@ -37,45 +29,14 @@ router.post('/auth/register', (req, res) => {
         status: 'success',
         token,
       });
+    } else {
+      res.status(503).json({
+        status: 'error',
+        message: 'Something went wrong',
+      });
     }
-    res.status(503).json({
-      status: 'error',
-      message: 'Something went wrong',
-    });
-    // return encodeToken(user[0])
-    //   .then(token => {
-    //     res.status(200).json({
-    //       status: 'success',
-    //       token,
-    //     });
-    //   })
-    //   .catch(err => {
-    //     res.status(500).json({
-    //       status: 'error',
-    //       err,
-    //     });
-    //   });
   });
 });
-
-// router.post('/auth/register', (req, res) =>
-//   createUser(req).then(user => {
-//     console.log(user);
-//     return encodeToken(user[0])
-//       .then(token => {
-//         res.status(200).json({
-//           status: 'success',
-//           token,
-//         });
-//       })
-//       .catch(err => {
-//         res.status(500).json({
-//           status: 'error',
-//           err,
-//         });
-//       });
-//   }),
-// );
 
 // passport.authenticate('local', (err, user) => {
 //   if (user) {
@@ -102,14 +63,14 @@ router.post('/auth/register', (req, res) => {
 //     }),
 // );
 
-router.post('/login', (req, res, next) => {
+router.post('auth/login', (req, res, next) => {
   const { username, password } = req.body;
   getUser(username)
     .then(response => {
-      authHelpers.comparePass(password, response.password);
+      comparePass(password, response.password);
       return response;
     })
-    .then(response => localAuth.encodeToken(response))
+    .then(response => encodeToken(response))
     .then(token => {
       res.status(200).json({
         status: 'success',
