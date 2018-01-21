@@ -2,7 +2,6 @@
 // todo- fix flow - AGAIN
 
 import chai from 'chai';
-// import passportStub from 'passport-stub';
 
 import server from '../../app';
 import db from '../../db';
@@ -12,7 +11,6 @@ const should = chai.should();
 const chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
-// passportStub.install(server);
 
 describe('routes : auth', () => {
   beforeEach(() => db.migrate.rollback().then(() => db.migrate.latest()));
