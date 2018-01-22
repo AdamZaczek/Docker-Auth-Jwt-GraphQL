@@ -38,31 +38,6 @@ router.post('/auth/register', (req, res) => {
   });
 });
 
-// passport.authenticate('local', (err, user) => {
-//   if (user) {
-//     handleResponse(res, 200, 'success');
-//   }
-// })(req, res, next);
-// })
-// .catch(err => handleResponse(err, 500, 'error')),
-
-// router.post('/register', (req, res, next) =>
-//   authHelpers
-//     .createUser(req)
-//     .then(user => localAuth.encodeToken(user[0]))
-//     .then(token => {
-//       res.status(200).json({
-//         status: 'success',
-//         token: token,
-//       });
-//     })
-//     .catch(err => {
-//       res.status(500).json({
-//         status: 'error',
-//       });
-//     }),
-// );
-
 router.post('auth/login', (req, res, next) => {
   const { username, password } = req.body;
   getUser(username)
