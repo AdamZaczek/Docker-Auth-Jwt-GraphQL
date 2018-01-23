@@ -38,7 +38,7 @@ router.post('/auth/register', (req, res) => {
   });
 });
 
-router.post('auth/login', (req, res, next) => {
+router.post('/auth/login', (req, res, next) => {
   const { username, password } = req.body;
   getUser(username)
     .then(response => {
