@@ -30,6 +30,7 @@ export const loginRequired = (req: any, res: any, next: any) => {
   return next();
 };
 
+// todo make it use email
 export const getUser = (username: string) =>
   db('users')
     .where({

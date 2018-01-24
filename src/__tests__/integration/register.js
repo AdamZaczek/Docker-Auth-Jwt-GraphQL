@@ -13,7 +13,12 @@ const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
 describe('routes : auth', () => {
-  beforeEach(() => db.migrate.rollback().then(() => db.migrate.latest()));
+  beforeEach(() =>
+    db.migrate
+      .rollback()
+      .then(() => db.migrate.latest())
+      .then(() => db.seed.run()),
+  );
 
   afterEach(() => db.migrate.rollback());
 

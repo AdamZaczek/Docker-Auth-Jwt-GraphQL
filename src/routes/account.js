@@ -40,8 +40,10 @@ router.post('/auth/register', (req, res) => {
 
 router.post('/auth/login', (req, res, next) => {
   const { username, password } = req.body;
+  console.log(username, password);
   getUser(username)
     .then(response => {
+      console.log(response);
       comparePass(password, response.password);
       return response;
     })
