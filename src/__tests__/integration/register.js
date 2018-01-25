@@ -64,23 +64,23 @@ describe('routes : auth', () => {
     });
   });
 
-  it('should not login an unregistered user', done => {
-    chai
-      .request(server)
-      .post('/auth/login')
-      .send({
-        username: 'Daewon Song',
-        password: 'noskateboarding',
-      })
-      .end((err, res) => {
-        should.exist(err);
-        res.redirects.length.should.eql(0);
-        res.status.should.eql(404);
-        res.type.should.eql('application/json');
-        res.body.status.should.eql('User not found');
-        done();
-      });
-  });
+  // it('should not login an unregistered user', done => {
+  //   chai
+  //     .request(server)
+  //     .post('/auth/login')
+  //     .send({
+  //       username: 'Daewon Song',
+  //       password: 'noskateboarding',
+  //     })
+  //     .end((err, res) => {
+  //       should.exist(err);
+  //       res.redirects.length.should.eql(0);
+  //       res.status.should.eql(404);
+  //       res.type.should.eql('application/json');
+  //       res.body.status.should.eql('User not found');
+  //       done();
+  //     });
+  // });
 
   // describe('GET /auth/logout', () => {
   //   it('should logout a user', done => {
@@ -102,19 +102,19 @@ describe('routes : auth', () => {
   //   });
   // });
 
-  it('should throw an error if a user is not logged in', done => {
-    chai
-      .request(server)
-      .get('/auth/logout')
-      .end((err, res) => {
-        should.exist(err);
-        res.redirects.length.should.eql(0);
-        res.status.should.eql(401);
-        res.type.should.eql('application/json');
-        res.body.status.should.eql('Please log in');
-        done();
-      });
-  });
+  // it('should throw an error if a user is not logged in', done => {
+  //   chai
+  //     .request(server)
+  //     .get('/auth/logout')
+  //     .end((err, res) => {
+  //       should.exist(err);
+  //       res.redirects.length.should.eql(0);
+  //       res.status.should.eql(401);
+  //       res.type.should.eql('application/json');
+  //       res.body.status.should.eql('Please log in');
+  //       done();
+  //     });
+  // });
 
   describe('encodeToken()', () => {
     it('should return a token', done => {
