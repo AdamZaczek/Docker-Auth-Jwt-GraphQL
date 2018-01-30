@@ -42,6 +42,7 @@ describe('routes : auth', () => {
     });
   });
 
+  // the migrations are failing because of this test, at least one line is messing things up
   describe('POST /auth/login', () => {
     it('should login a user', done => {
       chai
@@ -52,7 +53,7 @@ describe('routes : auth', () => {
           password: 'noskateboarding',
         })
         .end((err, res) => {
-          console.log(err);
+          // console.log(err);
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(200);
