@@ -3,14 +3,18 @@
 // import URL from 'url';
 // import passport from 'passport';
 // import validator from 'validator';
-import { Router } from 'express';
+import {
+  Router
+} from 'express';
 import {
   createUser,
   comparePass,
   getUser,
   loginRequired,
 } from '../helpers/auth';
-import { encodeToken } from '../helpers/jwtHelpers';
+import {
+  encodeToken
+} from '../helpers/jwtHelpers';
 
 const router = new Router();
 
@@ -39,12 +43,16 @@ router.post('/auth/register', (req, res) => {
 });
 
 router.post('/auth/login', (req, res, next) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password
+  } = req.body;
   console.log(username, password);
   getUser(username)
     .then(response => {
       console.log(response);
-      comparePass(password, response.password);
+      // this one is broken
+      // comparePass(password, response.password);
       return response;
     })
     .then(response => encodeToken(response))
