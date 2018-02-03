@@ -26,7 +26,6 @@ const handleResponse = (res, code, statusMsg) => {
 
 router.post('/auth/register', (req, res) => {
   createUser(req).then(user => {
-    // console.log(user);
     const token = encodeToken(user[0]);
     if (token) {
       res.status(200).json({
@@ -49,12 +48,7 @@ router.post('/auth/login', (req, res, next) => {
   } = req.body;
   console.log(username, password);
   getUser(username)
-    .then(response => {
-      console.log(response);
-      // this one is broken, it might be docker-bcrypt problem
-      return comparePass(password, response.password_hash);
-      // return response;
-    })
+    .then(response => comparePass(password, response.password_hash))
     .then(response => encodeToken(response))
     .then(token => {
       res.status(200).json({
@@ -68,30 +62,6 @@ router.post('/auth/login', (req, res, next) => {
       });
     });
 });
-
-// router.post('/auth/login', (req, res, next) => {
-//   console.log('hey from /auth/login');
-//   passport.authenticate('local', (err, user) => {
-//     if (err) {
-//       handleResponse(res, 500, 'error');
-//     }
-//     if (!user) {
-//       handleResponse(res, 404, 'User not found');
-//     }
-//     if (user) {
-//       const token = encodeToken(user);
-//       res.json({
-//         token,
-//       });
-//       // req.logIn(user, error => {
-//       //   if (error) {
-//       //     handleResponse(res, 500, 'error');
-//       //   }
-//       //   handleResponse(res, 200, 'success');
-//       // });
-//     }
-//   })(req, res, next);
-// });
 
 router.get('/auth/logout', loginRequired, (req, res) => {
   req.session.destroy();

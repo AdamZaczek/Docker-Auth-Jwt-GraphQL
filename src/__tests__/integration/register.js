@@ -57,19 +57,12 @@ describe('routes : auth', () => {
           password: 'noskateboarding',
         })
         .end((err, res) => {
-          // simply put, there's no token in response!
-          // comparePass is not working
-          // console.log(err);
-          // should.not.exist(err);
-          // this one is fine
+          should.not.exist(err);
           res.redirects.length.should.eql(0);
-          console.log(res.status);
           res.status.should.eql(200);
           res.type.should.eql('application/json');
-          // this break migration
-          // console.log(res.body) returns { status: 'error' }
-          // res.body.status.should.eql('success');
-          // should.exist(res.body.token);
+          res.body.status.should.eql('success');
+          should.exist(res.body.token);
           done();
         });
     });

@@ -3,14 +3,6 @@
 import bcrypt from 'bcryptjs';
 import db from '../db';
 
-/**
- * compares user password and hash in database
- * @param {string} userPassword typed password - The title of the book.
- * @param {string} databasePassword - password hash stored in the database.
- */
-// export const comparePass = (userPassword: string, databasePassword: string) =>
-//   bcrypt.compareSync(userPassword, databasePassword);
-
 export const createUser = (req: any) => {
   const salt = bcrypt.genSaltSync();
   const hash = bcrypt.hashSync(req.body.password, salt);
@@ -38,15 +30,14 @@ export const getUser = (username: string) =>
   })
   .first();
 
-// export const comparePass = (userPassword: string, databasePassword: string) => {
-//   // console.log('yay from comparePass', bcrypt)
-//   // console.log(bcrypt.compareSync(userPassword, databasePassword))
-//   const bool = bcrypt.compareSync(userPassword, databasePassword);
-//   // console.log(bool);
-//   bool.then(res => console.log(res))
-//   if (!bool) throw new Error('password does not match');
-//   else return true;
-// };
+/**
+ * compares user password and hash in database
+ * @param {string} userPassword typed password - The title of the book.
+ * @param {string} databasePassword - password hash stored in the database.
+ */
 
-export const comparePass = (userPassword: string, databasePassword: string) =>
-  bcrypt.compareSync(userPassword, databasePassword);
+export const comparePass = (userPassword: string, databasePassword: string) => {
+  const bool = bcrypt.compareSync(userPassword, databasePassword);
+  if (!bool) throw new Error('password does not match');
+  else return true;
+};
