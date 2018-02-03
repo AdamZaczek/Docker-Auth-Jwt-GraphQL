@@ -33,13 +33,20 @@ export const loginRequired = (req: any, res: any, next: any) => {
 // todo make it use email
 export const getUser = (username: string) =>
   db('users')
-    .where({
-      username,
-    })
-    .first();
+  .where({
+    username,
+  })
+  .first();
 
-export const comparePass = (userPassword: string, databasePassword: string) => {
-  const bool = bcrypt.compareSync(userPassword, databasePassword);
-  if (!bool) throw new Error('password does not match');
-  else return true;
-};
+// export const comparePass = (userPassword: string, databasePassword: string) => {
+//   // console.log('yay from comparePass', bcrypt)
+//   // console.log(bcrypt.compareSync(userPassword, databasePassword))
+//   const bool = bcrypt.compareSync(userPassword, databasePassword);
+//   // console.log(bool);
+//   bool.then(res => console.log(res))
+//   if (!bool) throw new Error('password does not match');
+//   else return true;
+// };
+
+export const comparePass = (userPassword: string, databasePassword: string) =>
+  bcrypt.compareSync(userPassword, databasePassword);

@@ -64,7 +64,7 @@ describe('routes : auth', () => {
           // this one is fine
           res.redirects.length.should.eql(0);
           console.log(res.status);
-          // res.status.should.eql(200);
+          res.status.should.eql(200);
           res.type.should.eql('application/json');
           // this break migration
           // console.log(res.body) returns { status: 'error' }

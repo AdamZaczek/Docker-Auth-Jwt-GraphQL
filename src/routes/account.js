@@ -51,9 +51,9 @@ router.post('/auth/login', (req, res, next) => {
   getUser(username)
     .then(response => {
       console.log(response);
-      // this one is broken
-      // comparePass(password, response.password);
-      return response;
+      // this one is broken, it might be docker-bcrypt problem
+      return comparePass(password, response.password_hash);
+      // return response;
     })
     .then(response => encodeToken(response))
     .then(token => {
