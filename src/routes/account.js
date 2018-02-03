@@ -46,7 +46,6 @@ router.post('/auth/login', (req, res, next) => {
     username,
     password
   } = req.body;
-  console.log(username, password);
   getUser(username)
     .then(response => comparePass(password, response.password_hash))
     .then(response => encodeToken(response))

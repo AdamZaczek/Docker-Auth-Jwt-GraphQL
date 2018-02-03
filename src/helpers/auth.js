@@ -25,10 +25,10 @@ export const loginRequired = (req: any, res: any, next: any) => {
 // todo make it use email
 export const getUser = (username: string) =>
   db('users')
-  .where({
-    username,
-  })
-  .first();
+    .where({
+      username,
+    })
+    .first();
 
 /**
  * compares user password and hash in database
