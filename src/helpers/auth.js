@@ -2,9 +2,7 @@
 
 import bcrypt from 'bcryptjs';
 import db from '../db';
-import {
-  decodeToken
-} from './jwtHelpers';
+import { decodeToken } from './jwtHelpers';
 
 export const createUser = (req: any) => {
   const salt = bcrypt.genSaltSync();
@@ -28,10 +26,10 @@ export const loginRequired = (req: any, res: any, next: any) => {
 // todo make it use email
 export const getUser = (username: string) =>
   db('users')
-  .where({
-    username,
-  })
-  .first();
+    .where({
+      username,
+    })
+    .first();
 
 /**
  * compares user password and hash in database
@@ -46,10 +44,10 @@ export const comparePass = (userPassword: string, databasePassword: string) => {
 };
 
 export const ensureAuthenticated = (req, res, next) => {
-  console.log(req)
+  console.log(req);
   if (!(req.headers && req.headers.authorization)) {
     return res.status(400).json({
-      status: 'Please log in'
+      status: 'Please log in',
     });
   }
   // decode the token, this is gonna give us ['beader', 'token']
@@ -58,21 +56,22 @@ export const ensureAuthenticated = (req, res, next) => {
   decodeToken(token, (err, payload) => {
     if (err) {
       return res.status(401).json({
-        status: 'Token has expired'
+        status: 'Token has expired',
       });
-    } else {
-      // check if the user still exists in the db
-      return db('users').where({
-          id: parseInt(payload.sub)
-        }).first()
-        .then((user) => {
-          next();
-        })
-        .catch((err) => {
-          res.status(500).json({
-            status: 'error'
-          });
-        });
     }
+    // check if the user still exists in the db
+    return db('users')
+      .where({
+        id: parseInt(payload.sub),
+      })
+      .first()
+      .then(user => {
+        next();
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: 'error',
+        });
+      });
   });
-}
+};

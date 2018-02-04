@@ -3,9 +3,7 @@
 // import URL from 'url';
 // import passport from 'passport';
 // import validator from 'validator';
-import {
-  Router
-} from 'express';
+import { Router } from 'express';
 import {
   createUser,
   comparePass,
@@ -28,10 +26,10 @@ const handleResponse = (res, code, statusMsg) => {
 };
 
 const ensureAuthenticated = (req, res, next) => {
-  console.log(req.headers)
+  console.log(req.headers);
   if (!(req.headers && req.headers.authorization)) {
     return res.status(400).json({
-      status: 'Please log in'
+      status: 'Please log in',
     });
   }
   // decode the token, this is gonna give us ['beader', 'token']
@@ -41,24 +39,25 @@ const ensureAuthenticated = (req, res, next) => {
   decodeToken(token, (err, payload) => {
     if (err) {
       return res.status(401).json({
-        status: 'Token has expired'
+        status: 'Token has expired',
       });
-    } else {
-      // check if the user still exists in the db
-      return db('users').where({
-          id: parseInt(payload.sub)
-        }).first()
-        .then((user) => {
-          next();
-        })
-        .catch((err) => {
-          res.status(500).json({
-            status: 'error'
-          });
-        });
     }
+    // check if the user still exists in the db
+    return db('users')
+      .where({
+        id: parseInt(payload.sub),
+      })
+      .first()
+      .then(user => {
+        next();
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: 'error',
+        });
+      });
   });
-}
+};
 
 router.post('/auth/register', (req, res) => {
   createUser(req).then(user => {
@@ -78,10 +77,7 @@ router.post('/auth/register', (req, res) => {
 });
 
 router.post('/auth/login', (req, res, next) => {
-  const {
-    username,
-    password
-  } = req.body;
+  const { username, password } = req.body;
   getUser(username)
     .then(response => comparePass(password, response.password_hash))
     .then(response => encodeToken(response))
@@ -104,12 +100,11 @@ router.get('/auth/logout', loginRequired, (req, res) => {
 });
 
 // this will be moved to a graphql fragment
-router.get('/auth/user', [ensureAuthenticated],
-  (req, res, next) => {
-    res.status(200).json({
-      status: 'success',
-    });
+router.get('/auth/user', [ensureAuthenticated], (req, res, next) => {
+  res.status(200).json({
+    status: 'success',
   });
+});
 
 // Allows to fetch the last login error(s) (which is usefull for single-page apps)
 router.post('/login/error', (req, res) => {

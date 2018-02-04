@@ -68,12 +68,13 @@ describe('routes : auth', () => {
     });
   });
 
-  it('should not login an unregistered user', (done) => {
-    chai.request(server)
+  it('should not login an unregistered user', done => {
+    chai
+      .request(server)
       .post('/auth/login')
       .send({
         username: 'Daewon Song',
-        password: 'noskateboarding'
+        password: 'noskateboarding',
       })
       .end((err, res) => {
         should.exist(err);
@@ -144,8 +145,9 @@ describe('routes : auth', () => {
     });
   });
 
-  it('should return a success', (done) => {
-    chai.request(server)
+  it('should return a success', done => {
+    chai
+      .request(server)
       .post('/auth/login')
       .send({
         username: 'Rodney Mullen',
@@ -153,11 +155,15 @@ describe('routes : auth', () => {
       })
       .end((error, response) => {
         should.not.exist(error);
-        console.log(response.body)
-        chai.request(server)
+        // it works until here
+        console.log(response.body);
+        chai
+          .request(server)
+          // the test breaks at this part
           .get('/auth/user')
-          .set('authorization', 'Bearer ' + response.body.token)
+          .set('authorization', `Bearer ${response.body.token}`)
           .end((err, res) => {
+            console.log(res.status, res.body)
             should.not.exist(err);
             res.status.should.eql(200);
             res.type.should.eql('application/json');
