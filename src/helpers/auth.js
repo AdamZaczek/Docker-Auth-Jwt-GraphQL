@@ -46,6 +46,7 @@ export const comparePass = (userPassword: string, databasePassword: string) => {
 };
 
 export const ensureAuthenticated = (req, res, next) => {
+  console.log(req)
   if (!(req.headers && req.headers.authorization)) {
     return res.status(400).json({
       status: 'Please log in'

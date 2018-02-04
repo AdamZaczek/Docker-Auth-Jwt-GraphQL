@@ -143,18 +143,17 @@ describe('routes : auth', () => {
       });
     });
   });
-});
 
-describe('GET /auth/user', () => {
   it('should return a success', (done) => {
     chai.request(server)
       .post('/auth/login')
       .send({
         username: 'Rodney Mullen',
-        password: 'noskateboarding'
+        password: 'noskateboarding',
       })
       .end((error, response) => {
         should.not.exist(error);
+        console.log(response.body)
         chai.request(server)
           .get('/auth/user')
           .set('authorization', 'Bearer ' + response.body.token)
@@ -167,16 +166,41 @@ describe('GET /auth/user', () => {
           });
       });
   });
-
-  it('should throw an error if a user is not logged in', (done) => {
-    chai.request(server)
-      .get('/auth/user')
-      .end((err, res) => {
-        should.exist(err);
-        res.status.should.eql(400);
-        res.type.should.eql('application/json');
-        res.body.status.should.eql('Please log in');
-        done();
-      });
-  });
 });
+
+// describe('GET /auth/user', () => {
+//   it('should return a success', (done) => {
+//     chai.request(server)
+//       .post('/auth/login')
+//       .send({
+//         username: 'Leonardo',
+//         password: 'Da Vinci',
+//       })
+//       .end((error, response) => {
+//         should.not.exist(error);
+//         console.log(response.body)
+//         chai.request(server)
+//           .get('/auth/user')
+//           .set('authorization', 'Bearer ' + response.body.token)
+//           .end((err, res) => {
+//             should.not.exist(err);
+//             res.status.should.eql(200);
+//             res.type.should.eql('application/json');
+//             res.body.status.should.eql('success');
+//             done();
+//           });
+//       });
+//   });
+
+//   it('should throw an error if a user is not logged in', (done) => {
+//     chai.request(server)
+//       .get('/auth/user')
+//       .end((err, res) => {
+//         should.exist(err);
+//         res.status.should.eql(400);
+//         res.type.should.eql('application/json');
+//         res.body.status.should.eql('Please log in');
+//         done();
+//       });
+//   });
+// });

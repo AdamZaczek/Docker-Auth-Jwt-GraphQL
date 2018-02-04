@@ -13,9 +13,11 @@ import {
   loginRequired,
 } from '../helpers/auth';
 import {
+  decodeToken,
   encodeToken,
-  ensureAuthenticated,
+  // ensureAuthenticated,
 } from '../helpers/jwtHelpers';
+import db from '../db';
 
 const router = new Router();
 
@@ -24,6 +26,39 @@ const handleResponse = (res, code, statusMsg) => {
     status: statusMsg,
   });
 };
+
+const ensureAuthenticated = (req, res, next) => {
+  console.log(req.headers)
+  if (!(req.headers && req.headers.authorization)) {
+    return res.status(400).json({
+      status: 'Please log in'
+    });
+  }
+  // decode the token, this is gonna give us ['beader', 'token']
+  const header = req.headers.authorization.split(' ');
+  const token = header[1];
+  // console.log(header, token)
+  decodeToken(token, (err, payload) => {
+    if (err) {
+      return res.status(401).json({
+        status: 'Token has expired'
+      });
+    } else {
+      // check if the user still exists in the db
+      return db('users').where({
+          id: parseInt(payload.sub)
+        }).first()
+        .then((user) => {
+          next();
+        })
+        .catch((err) => {
+          res.status(500).json({
+            status: 'error'
+          });
+        });
+    }
+  });
+}
 
 router.post('/auth/register', (req, res) => {
   createUser(req).then(user => {
@@ -68,8 +103,8 @@ router.get('/auth/logout', loginRequired, (req, res) => {
   handleResponse(res, 200, 'success');
 });
 
-router.get('auth/user',
-  ensureAuthenticated,
+// this will be moved to a graphql fragment
+router.get('/auth/user', [ensureAuthenticated],
   (req, res, next) => {
     res.status(200).json({
       status: 'success',
