@@ -13,7 +13,8 @@ import {
   loginRequired,
 } from '../helpers/auth';
 import {
-  encodeToken
+  encodeToken,
+  ensureAuthenticated,
 } from '../helpers/jwtHelpers';
 
 const router = new Router();
@@ -66,6 +67,14 @@ router.get('/auth/logout', loginRequired, (req, res) => {
   req.session.destroy();
   handleResponse(res, 200, 'success');
 });
+
+router.get('auth/user',
+  ensureAuthenticated,
+  (req, res, next) => {
+    res.status(200).json({
+      status: 'success',
+    });
+  });
 
 // Allows to fetch the last login error(s) (which is usefull for single-page apps)
 router.post('/login/error', (req, res) => {
