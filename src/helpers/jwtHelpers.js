@@ -2,17 +2,16 @@ const moment = require('moment');
 const jwt = require('jsonwebtoken');
 
 // assigning id does not work properly
-export const encodeToken = arg => {
-  console.log(arg);
-  return jwt.sign(
+export const encodeToken = ({ id }) =>
+  jwt.sign(
     {
       exp: moment()
         .add(90, 'days')
         .unix(),
+      id,
     },
     process.env.TOKEN_SECRET,
   );
-};
 
 export const decodeToken = (token, callback) => {
   const payload = jwt.decode(token, process.env.TOKEN_SECRET);

@@ -81,7 +81,10 @@ router.post('/auth/register', (req, res) => {
 router.post('/auth/login', (req, res, next) => {
   const { username, password } = req.body;
   getUser(username)
-    .then(response => comparePass(password, response.password_hash))
+    .then(response => {
+      comparePass(password, response.password_hash);
+      return response;
+    })
     // resonse equals true when trying to log user in
     // that's why encodeToken does not return the id
     .then(response => {
