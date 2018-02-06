@@ -37,19 +37,21 @@ const ensureAuthenticated = (req, res, next) => {
   const token = header[1];
   // console.log(header, token)
   decodeToken(token, (err, payload) => {
+    console.log(payload);
     if (err) {
       return res.status(401).json({
         status: 'Token has expired',
       });
     }
-    // check if the user still exists in the db
+    // check if the user still exists in the db, this part breaks
     return db('users')
       .where({
-        id: parseInt(payload.sub),
+        id: payload.id,
       })
       .first()
       .then(user => {
         next();
+        console.log('yoyo from ensureAuthed', user);
       })
       .catch(err => {
         res.status(500).json({
