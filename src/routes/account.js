@@ -1,8 +1,5 @@
 /* @flow */
 
-// import URL from 'url';
-// import passport from 'passport';
-// import validator from 'validator';
 import { Router } from 'express';
 import {
   createUser,
@@ -26,7 +23,6 @@ const handleResponse = (res, code, statusMsg) => {
 };
 
 const ensureAuthenticated = (req, res, next) => {
-  console.log(req.headers);
   if (!(req.headers && req.headers.authorization)) {
     return res.status(400).json({
       status: 'Please log in',
@@ -35,15 +31,12 @@ const ensureAuthenticated = (req, res, next) => {
   // decode the token, this is gonna give us ['beader', 'token']
   const header = req.headers.authorization.split(' ');
   const token = header[1];
-  // console.log(header, token)
   decodeToken(token, (err, payload) => {
-    console.log(payload);
     if (err) {
       return res.status(401).json({
         status: 'Token has expired',
       });
     }
-    // check if the user still exists in the db, this part breaks
     return db('users')
       .where({
         id: payload.id,
@@ -51,7 +44,6 @@ const ensureAuthenticated = (req, res, next) => {
       .first()
       .then(user => {
         next();
-        console.log('yoyo from ensureAuthed', user);
       })
       .catch(err => {
         res.status(500).json({

@@ -1,7 +1,6 @@
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 
-// assigning id does not work properly
 export const encodeToken = ({ id }) =>
   jwt.sign(
     {
