@@ -2,7 +2,6 @@
 
 import bcrypt from 'bcryptjs';
 import db from '../db';
-import { decodeToken } from './jwtHelpers';
 
 export const createUser = (req: any) => {
   const salt = bcrypt.genSaltSync();
@@ -36,42 +35,3 @@ export const getUser = (username: string) =>
  * @param {string} userPassword typed password - The title of the book.
  * @param {string} databasePassword - password hash stored in the database.
  */
-
-export const comparePass = (userPassword: string, databasePassword: string) => {
-  const bool = bcrypt.compareSync(userPassword, databasePassword);
-  if (!bool) throw new Error('password does not match');
-  else return true;
-};
-
-export const ensureAuthenticated = (req, res, next) => {
-  console.log(req);
-  if (!(req.headers && req.headers.authorization)) {
-    return res.status(400).json({
-      status: 'Please log in',
-    });
-  }
-  // decode the token, this is gonna give us ['beader', 'token']
-  const header = req.headers.authorization.split(' ');
-  const token = header[1];
-  decodeToken(token, (err, payload) => {
-    if (err) {
-      return res.status(401).json({
-        status: 'Token has expired',
-      });
-    }
-    // check if the user still exists in the db
-    return db('users')
-      .where({
-        id: parseInt(payload.id),
-      })
-      .first()
-      .then(user => {
-        next();
-      })
-      .catch(err => {
-        res.status(500).json({
-          status: 'error',
-        });
-      });
-  });
-};

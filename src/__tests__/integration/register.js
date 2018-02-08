@@ -6,7 +6,10 @@ import chai from 'chai';
 
 import server from '../../app';
 import db from '../../db';
-import { encodeToken, decodeToken } from '../../helpers/jwtHelpers';
+import {
+  encodeToken,
+  decodeToken
+} from '../../helpers/jwtHelpers';
 
 const should = chai.should();
 const chaiHttp = require('chai-http');
@@ -16,9 +19,9 @@ chai.use(chaiHttp);
 describe('routes : auth', () => {
   beforeEach(() =>
     db.migrate
-      .rollback()
-      .then(() => db.migrate.latest())
-      .then(() => db.seed.run()),
+    .rollback()
+    .then(() => db.migrate.latest())
+    .then(() => db.seed.run()),
   );
 
   afterEach(() => db.migrate.rollback());
@@ -152,14 +155,12 @@ describe('routes : auth', () => {
       .end((error, response) => {
         should.not.exist(error);
         // it works until here
-        console.log(response.body);
         chai
           .request(server)
           // the test breaks at this part
           .get('/auth/user')
           .set('authorization', `Bearer ${response.body.token}`)
           .end((err, res) => {
-            console.log(res.status, res.body);
             should.not.exist(err);
             res.status.should.eql(200);
             res.type.should.eql('application/json');

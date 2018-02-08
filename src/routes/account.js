@@ -79,10 +79,7 @@ router.post('/auth/login', (req, res, next) => {
     })
     // resonse equals true when trying to log user in
     // that's why encodeToken does not return the id
-    .then(response => {
-      console.log(response);
-      return encodeToken(response);
-    })
+    .then(response => encodeToken(response))
     .then(token => {
       res.status(200).json({
         status: 'success',
