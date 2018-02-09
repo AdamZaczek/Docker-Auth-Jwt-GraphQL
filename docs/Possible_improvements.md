@@ -1,7 +1,7 @@
-1. Since frontend will be built on top of a SPA architecture implementing JWT will be the way to go, or at least, that's what I've been told.
+1. Find a nice way to work with existing containers so you don't have to make a new one every time you run a test.
 
-2. Passport will need to be modularized a bit.
+2. Add some graphql queries and initial SPA infrastructure so you can test the system on the frontend side.
 
-3. Fixing scripts so yarn install no longer fires every time tests are made will be great.
+3. Add more fields to login screen - that one is for later.
 
-4. There's still no way to validate the login on the frontend. Time to fix that.
+4. Login via email, best case scenario would we sending confirmation to the user.
