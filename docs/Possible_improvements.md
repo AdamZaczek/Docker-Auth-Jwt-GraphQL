@@ -5,3 +5,5 @@
 3. Add more fields to login screen - that one is for later.
 
 4. Login via email, best case scenario would we sending confirmation to the user.
+
+5. Write everything in actual es next!
