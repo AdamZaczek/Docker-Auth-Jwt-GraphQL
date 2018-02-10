@@ -7,11 +7,7 @@ import {
   getUser,
   loginRequired,
 } from '../helpers/auth';
-import {
-  decodeToken,
-  encodeToken,
-  // ensureAuthenticated,
-} from '../helpers/jwtHelpers';
+import { decodeToken, encodeToken } from '../helpers/jwtHelpers';
 import db from '../db';
 
 const router = new Router();
@@ -46,9 +42,7 @@ const ensureAuthenticated = (req, res, next) => {
         next();
       })
       .catch(err => {
-        res.status(500).json({
-          status: 'error',
-        });
+        handleResponse(res, 500, 'error');
       });
   });
 };
