@@ -29,9 +29,7 @@ const ensureAuthenticated = (req, res, next) => {
   const token = header[1];
   decodeToken(token, (err, payload) => {
     if (err) {
-      return res.status(401).json({
-        status: 'Token has expired',
-      });
+      return handleResponse(res, 401, 'Token has expired');
     }
     return db('users')
       .where({
@@ -56,10 +54,7 @@ router.post('/auth/register', (req, res) => {
         token,
       });
     } else {
-      res.status(503).json({
-        status: 'error',
-        message: 'Something went wrong',
-      });
+      handleResponse(res, 503, 'Something went wrong');
     }
   });
 });
@@ -94,9 +89,7 @@ router.get('/auth/logout', loginRequired, (req, res) => {
 
 // this will be moved to a graphql fragment
 router.get('/auth/user', [ensureAuthenticated], (req, res, next) => {
-  res.status(200).json({
-    status: 'success',
-  });
+  handleResponse(res, 200, 'success');
 });
 
 // Allows to fetch the last login error(s) (which is usefull for single-page apps)

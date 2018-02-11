@@ -35,3 +35,8 @@ export const getUser = (username: string) =>
  * @param {string} userPassword typed password - The title of the book.
  * @param {string} databasePassword - password hash stored in the database.
  */
+export const comparePass = (userPassword: string, databasePassword: string) => {
+  const bool = bcrypt.compareSync(userPassword, databasePassword);
+  if (!bool) throw new Error('password does not match');
+  else return true;
+};
