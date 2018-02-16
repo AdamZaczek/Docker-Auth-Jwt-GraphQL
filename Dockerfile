@@ -32,7 +32,7 @@ COPY migrations ./migrations/
 COPY seeds ./seeds/
 COPY locales ./locales/
 # Attempts to copy "build" folder even if it doesn't exist
-COPY .env build* ./build/
+COPY build* ./build/
 
 # Run the container under "node" user by default
 USER node
