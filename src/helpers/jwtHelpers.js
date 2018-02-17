@@ -1,5 +1,5 @@
-const moment = require('moment');
-const jwt = require('jsonwebtoken');
+import moment from 'moment';
+import jwt from 'jsonwebtoken';
 
 export const encodeToken = ({ id }) =>
   jwt.sign(
