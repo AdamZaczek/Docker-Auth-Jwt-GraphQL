@@ -6,9 +6,6 @@ import cors from 'cors';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import session from 'express-session';
-import connectRedis from 'connect-redis';
-import flash from 'express-flash';
 import i18next from 'i18next';
 import i18nextMiddleware, {
   LanguageDetector,
@@ -19,8 +16,6 @@ import PrettyError from 'pretty-error';
 import { printSchema, GraphQLError } from 'graphql';
 
 import email from './email';
-import redis from './redis';
-import passport from './passport';
 import accountRoutes from './routes/account';
 import schema from './schema';
 import Context from './Context';
@@ -72,21 +67,7 @@ app.use(
   }),
 );
 app.use(bodyParser.json());
-// app.use(
-//   session({
-//     store: new (connectRedis(session))({
-//       client: redis,
-//     }),
-//     name: 'sid',
-//     resave: true,
-//     saveUninitialized: true,
-//     secret: process.env.SESSION_SECRET,
-//   }),
-// );
 app.use(i18nextMiddleware.handle(i18next));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use(flash());
 
 app.use(accountRoutes);
 
