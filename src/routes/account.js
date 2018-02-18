@@ -18,14 +18,17 @@ const handleResponse = (res, code, statusMsg) => {
   });
 };
 
+// eslint-disable-next-line consistent-return
 const ensureAuthenticated = (req, res, next) => {
-  if (!(req.headers && req.headers.authorization)) {
+  const { headers } = req;
+  const authorizatonHeader = headers.authorization;
+  if (!(headers && authorizatonHeader)) {
     return res.status(400).json({
       status: 'Please log in',
     });
   }
   // decode the token, this is gonna give us ['beader', 'token']
-  const header = req.headers.authorization.split(' ');
+  const header = authorizatonHeader.split(' ');
   const token = header[1];
   decodeToken(token, (err, payload) => {
     if (err) {
@@ -36,11 +39,11 @@ const ensureAuthenticated = (req, res, next) => {
         id: payload.id,
       })
       .first()
-      .then(user => {
+      .then(() => {
         next();
       })
-      .catch(err => {
-        handleResponse(res, 500, 'error');
+      .catch(error => {
+        handleResponse(res, 500, error);
       });
   });
 };
@@ -59,7 +62,7 @@ router.post('/auth/register', (req, res) => {
   });
 });
 
-router.post('/auth/login', (req, res, next) => {
+router.post('/auth/login', (req, res) => {
   const { username, password } = req.body;
   getUser(username)
     .then(response => {
@@ -76,9 +79,7 @@ router.post('/auth/login', (req, res, next) => {
       });
     })
     .catch(err => {
-      res.status(500).json({
-        status: 'error',
-      });
+      handleResponse(res, 500, err);
     });
 });
 
@@ -88,7 +89,7 @@ router.get('/auth/logout', loginRequired, (req, res) => {
 });
 
 // this will be moved to a graphql fragment
-router.get('/auth/user', [ensureAuthenticated], (req, res, next) => {
+router.get('/auth/user', [ensureAuthenticated], (req, res) => {
   handleResponse(res, 200, 'success');
 });
 
