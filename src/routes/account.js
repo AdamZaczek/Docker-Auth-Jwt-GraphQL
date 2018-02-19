@@ -7,39 +7,10 @@ import {
   getUser,
   loginRequired,
 } from '../helpers/auth';
-import { decodeToken, encodeToken } from '../helpers/jwtHelpers';
+import { encodeToken, ensureAuthenticated } from '../helpers/jwtHelpers';
 import { handleResponse } from '../helpers/handleResponse';
-import db from '../db';
 
 const router = new Router();
-
-// eslint-disable-next-line consistent-return
-const ensureAuthenticated = (req, res, next) => {
-  const { headers } = req;
-  const authorizatonHeader = headers.authorization;
-  if (!(headers && authorizatonHeader)) {
-    return handleResponse(res, 400, 'Please log in');
-  }
-  // decode the token, this is gonna give us ['beader', 'token']
-  const header = authorizatonHeader.split(' ');
-  const token = header[1];
-  decodeToken(token, (err, payload) => {
-    if (err) {
-      return handleResponse(res, 401, 'Token has expired');
-    }
-    return db('users')
-      .where({
-        id: payload.id,
-      })
-      .first()
-      .then(() => {
-        next();
-      })
-      .catch(() => {
-        handleResponse(res, 500, 'Something went wrong during authentication');
-      });
-  });
-};
 
 router.post('/auth/register', (req, res) => {
   createUser(req).then(user => {
