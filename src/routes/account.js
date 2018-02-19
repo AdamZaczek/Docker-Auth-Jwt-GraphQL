@@ -8,15 +8,10 @@ import {
   loginRequired,
 } from '../helpers/auth';
 import { decodeToken, encodeToken } from '../helpers/jwtHelpers';
+import { handleResponse } from '../helpers/handleResponse';
 import db from '../db';
 
 const router = new Router();
-
-const handleResponse = (res, code, statusMsg) => {
-  res.status(code).json({
-    status: statusMsg,
-  });
-};
 
 // eslint-disable-next-line consistent-return
 const ensureAuthenticated = (req, res, next) => {
