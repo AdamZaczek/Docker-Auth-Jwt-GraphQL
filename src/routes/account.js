@@ -23,9 +23,7 @@ const ensureAuthenticated = (req, res, next) => {
   const { headers } = req;
   const authorizatonHeader = headers.authorization;
   if (!(headers && authorizatonHeader)) {
-    return res.status(400).json({
-      status: 'Please log in',
-    });
+    return handleResponse(res, 400, 'Please log in');
   }
   // decode the token, this is gonna give us ['beader', 'token']
   const header = authorizatonHeader.split(' ');
@@ -42,8 +40,8 @@ const ensureAuthenticated = (req, res, next) => {
       .then(() => {
         next();
       })
-      .catch(error => {
-        handleResponse(res, 500, error);
+      .catch(() => {
+        handleResponse(res, 500, 'Something went wrong during authentication');
       });
   });
 };
@@ -78,8 +76,8 @@ router.post('/auth/login', (req, res) => {
         token,
       });
     })
-    .catch(err => {
-      handleResponse(res, 500, err);
+    .catch(() => {
+      handleResponse(res, 500, 'error');
     });
 });
 
