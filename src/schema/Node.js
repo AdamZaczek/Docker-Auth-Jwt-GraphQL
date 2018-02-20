@@ -11,12 +11,6 @@ const { nodeInterface, nodeField: node, nodesField: nodes } = nodeDefinitions(
     switch (type) {
       case 'User':
         return context.userById.load(id).then(assignType('User'));
-      // case 'Email':
-      //   return context.emailById.load(id).then(assignType('Email'));
-      // case 'Story':
-      //   return context.storyById.load(id).then(assignType('Story'));
-      // case 'Comment':
-      //   return context.storyById.load(id).then(assignType('Comment'));
       default:
         return null;
     }
@@ -25,12 +19,6 @@ const { nodeInterface, nodeField: node, nodesField: nodes } = nodeDefinitions(
     switch (getType(obj)) {
       case 'User':
         return require('./UserType').default;
-      // case 'Email':
-      //   return require('./EmailType').default;
-      // case 'Story':
-      //   return require('./StoryType').default;
-      // case 'Comment':
-      //   return require('./CommentType').default;
       default:
         return null;
     }
