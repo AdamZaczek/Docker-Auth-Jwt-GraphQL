@@ -9,42 +9,38 @@ import {
 } from '../helpers/auth';
 import { encodeToken, ensureAuthenticated } from '../helpers/jwtHelpers';
 import { handleResponse } from '../helpers/handleResponse';
+// import { asyncMiddleware } from '../helpers/asyncMiddleware';
 
 const router = new Router();
 
-router.post('/auth/register', (req, res) => {
-  createUser(req).then(user => {
-    const token = encodeToken(user[0]);
-    if (token) {
-      res.status(200).json({
-        status: 'success',
-        token,
-      });
-    } else {
-      handleResponse(res, 503, 'Something went wrong');
-    }
-  });
+router.post('/auth/register', async (req, res) => {
+  const user = await createUser(req);
+  const token = encodeToken(user[0]);
+  if (token) {
+    res.status(200).json({
+      status: 'success',
+      token,
+    });
+  } else {
+    handleResponse(res, 503, 'Something went wrong');
+  }
 });
 
-router.post('/auth/login', (req, res) => {
-  const { username, password } = req.body;
-  getUser(username)
-    .then(response => {
-      comparePass(password, response.password_hash);
-      return response;
-    })
-    // resonse equals true when trying to log user in
-    // that's why encodeToken does not return the id
-    .then(response => encodeToken(response))
-    .then(token => {
-      res.status(200).json({
-        status: 'success',
-        token,
-      });
-    })
-    .catch(() => {
-      handleResponse(res, 500, 'error');
+router.post('/auth/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await getUser(username);
+    // this will throw error if pass does not match
+    comparePass(password, user.password_hash);
+    const token = await encodeToken(user);
+    res.status(200).json({
+      status: 'success',
+      token,
     });
+  } catch (error) {
+    // rename to some reasonable error
+    handleResponse(res, 500, 'error');
+  }
 });
 
 router.get('/auth/logout', loginRequired, (req, res) => {
