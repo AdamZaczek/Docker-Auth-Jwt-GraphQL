@@ -1,6 +1,8 @@
 // @flow
 
 import bcrypt from 'bcryptjs';
+
+import { handleResponse } from './handleResponse';
 import db from '../db';
 
 export const createUser = (req: any) => {
@@ -15,10 +17,8 @@ export const createUser = (req: any) => {
 };
 
 export const loginRequired = (req: any, res: any, next: any) => {
-  if (!req.user)
-    return res.status(401).json({
-      status: 'Please log in',
-    });
+  if (!req.user) return handleResponse(res, 401, 'Please log in');
+
   return next();
 };
 

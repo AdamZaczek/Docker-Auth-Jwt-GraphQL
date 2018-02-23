@@ -9,7 +9,6 @@ import {
 } from '../helpers/auth';
 import { encodeToken, ensureAuthenticated } from '../helpers/jwtHelpers';
 import { handleResponse } from '../helpers/handleResponse';
-// import { asyncMiddleware } from '../helpers/asyncMiddleware';
 
 const router = new Router();
 
