@@ -16,7 +16,7 @@ import PrettyError from 'pretty-error';
 import { printSchema, GraphQLError } from 'graphql';
 
 import email from './email';
-import accountRoutes from './routes/account';
+import accountRoutes from './routes/auth';
 import schema from './schema';
 import Context from './Context';
 import errors from './errors';
@@ -69,7 +69,7 @@ app.use(
 app.use(bodyParser.json());
 app.use(i18nextMiddleware.handle(i18next));
 
-app.use(accountRoutes);
+app.use('/auth', accountRoutes);
 
 // The following routes are intended to be used in development mode only
 if (process.env.NODE_ENV !== 'production') {

@@ -12,7 +12,7 @@ import { handleResponse } from '../helpers/handleResponse';
 
 const router = new Router();
 
-router.post('/auth/register', async (req, res) => {
+router.post('/register', async (req, res) => {
   const user = await createUser(req);
   const token = encodeToken(user[0]);
   if (token) {
@@ -25,7 +25,7 @@ router.post('/auth/register', async (req, res) => {
   }
 });
 
-router.post('/auth/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await getUser(username);
@@ -42,13 +42,13 @@ router.post('/auth/login', async (req, res) => {
   }
 });
 
-router.get('/auth/logout', loginRequired, (req, res) => {
+router.get('/logout', loginRequired, (req, res) => {
   req.session.destroy();
   handleResponse(res, 200, 'success');
 });
 
 // this will be moved to a graphql fragment
-router.get('/auth/user', [ensureAuthenticated], (req, res) => {
+router.get('/user', [ensureAuthenticated], (req, res) => {
   handleResponse(res, 200, 'success');
 });
 
